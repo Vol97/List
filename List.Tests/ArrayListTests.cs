@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 
 namespace List.Tests
 {
@@ -53,16 +54,7 @@ namespace List.Tests
         {
             ArrayList list = new ArrayList(arrayList);
 
-            try
-            {
-                list.AddAtIndex(value, index);
-            }
-            catch (System.IndexOutOfRangeException)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<IndexOutOfRangeException>(() => { list.AddAtIndex(value, index); });
         }
 
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4 })]
@@ -84,16 +76,7 @@ namespace List.Tests
         {
             ArrayList list = new ArrayList(arrayList);
 
-            try
-            {
-                list.Remove();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.Remove(); });
         }
 
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 2, 3, 4, 5 })]
@@ -115,16 +98,7 @@ namespace List.Tests
         {
             ArrayList list = new ArrayList(arrayList);
 
-            try
-            {
-                list.RemoveFirst();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.RemoveFirst(); });
         }
 
         [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 3, 4, 5 })]
@@ -143,20 +117,13 @@ namespace List.Tests
 
         [TestCase(6, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(-1, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(0, new int[] { })]
+        [TestCase(1, new int[] { })]
         public void RemoveAtIndex_WhenIndexIsLessThanZeroOrBiggerThanArrayLength_ThrowIndexOutOfRangeException(int index, int[] arrayList)
         {
             ArrayList list = new ArrayList(arrayList);
 
-            try
-            {
-                list.RemoveAtIndex(index);
-            }
-            catch (System.IndexOutOfRangeException)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<IndexOutOfRangeException>(() => { list.RemoveAtIndex(index); });
         }
 
         [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4 })]
@@ -167,6 +134,7 @@ namespace List.Tests
         [TestCase(0, new int[] { }, new int[] { })]
         [TestCase(6, new int[] { 1, 2, 3, 4, 5 }, new int[] { })]
         [TestCase(5, new int[] { 1, 2, 3, 4, 5 }, new int[] { })]
+        [TestCase(1, new int[] { }, new int[] { })]
         public void RemoveNElements_WhenNumberOfElementsPassed_RemoveNElemetsFromTheEndOfTheList(int numberOfElements, int[] arrayList, int[] expectedArrayList)
         {
             ArrayList actual = new ArrayList(arrayList);
@@ -215,16 +183,7 @@ namespace List.Tests
         {
             ArrayList list = new ArrayList(arrayList);
 
-            try
-            {
-                list.RemoveNElementsAtIndex(numberOfElements, index);
-            }
-            catch (System.IndexOutOfRangeException)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<IndexOutOfRangeException>(() => { list.RemoveNElementsAtIndex(numberOfElements, index); });
         }
 
         [TestCase(1, new int[] { 1, 2, 3, 1, 4, 5, 1 }, 0)]
@@ -276,16 +235,7 @@ namespace List.Tests
         {
             ArrayList list = new ArrayList(arrayList);
 
-            try
-            {
-                list.MaxValue();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.MaxValue(); });
         }
 
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, 3)]
@@ -306,16 +256,7 @@ namespace List.Tests
         {
             ArrayList list = new ArrayList(arrayList);
 
-            try
-            {
-                list.MinValue();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.MinValue(); });
         }
 
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, 6)]
@@ -337,16 +278,7 @@ namespace List.Tests
         {
             ArrayList list = new ArrayList(arrayList);
 
-            try
-            {
-                list.MaxValueIndex();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.MaxValueIndex(); });
         }
 
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, 0)]
@@ -367,16 +299,7 @@ namespace List.Tests
         {
             ArrayList list = new ArrayList(arrayList);
 
-            try
-            {
-                list.MinValueIndex();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.MinValueIndex(); });
         }
 
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 3, 3, 4, 6, 7, 7, 8, 9 })]
@@ -413,7 +336,6 @@ namespace List.Tests
         [TestCase(100, new int[] { -3, -9, -100, 100, 10 }, new int[] { -3, -9, -100, 10 })]
         [TestCase(2, new int[] { 1 }, new int[] { 1 })]
         [TestCase(0, new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
-
         public void RemoveFirstByValue_WhenValuePassed_RemoveFirstElementWithGivenValue(int value, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = new ArrayList(actualArray);
@@ -428,7 +350,6 @@ namespace List.Tests
         [TestCase(100, new int[] { -3, 100, -9, -100, 100, 10, 100 }, new int[] { -3, -9, -100, 10 })]
         [TestCase(2, new int[] { 1 }, new int[] { 1 })]
         [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { })]
-
         public void RemoveAllByValue_WhenValuePassed_RemoveAllElementsWithGivenValue(int value, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = new ArrayList(actualArray);
@@ -443,12 +364,10 @@ namespace List.Tests
         [TestCase(new int[0], new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 })]
-
         public void AddArrayList_WhenArrayListPassed_AddPassedArrayListToArrayListTheMethodIsCalledOn(int[] listToAdd, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = new ArrayList(actualArray);
             ArrayList expected = new ArrayList(expectedArray);
-
             ArrayList list = new ArrayList(listToAdd);
 
             actual.AddArrayList(list);
@@ -461,12 +380,10 @@ namespace List.Tests
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { -1, -2, -3, -4, -5, 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5 })]
-
         public void AddArrayListToStart_WhenArrayListPassed_AddPassedArrayListToTheStartOfArrayListTheMethodIsCalledOn(int[] listToAdd, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = new ArrayList(actualArray);
             ArrayList expected = new ArrayList(expectedArray);
-
             ArrayList list = new ArrayList(listToAdd);
 
             actual.AddArrayListToStart(list);
@@ -479,12 +396,10 @@ namespace List.Tests
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, 0, new int[] { }, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, 1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, -1, -2, -3, -4, -5, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 4, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5 })]
-
         public void AddArrayListAtIndex_WhenArrayListAndIndexPassed_AddPassedArrayListToArrayListOnTheGivenIndex(int[] listToAdd, int index, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = new ArrayList(actualArray);
             ArrayList expected = new ArrayList(expectedArray);
-
             ArrayList list = new ArrayList(listToAdd);
 
             actual.AddArrayListAtIndex(list, index);
@@ -499,18 +414,7 @@ namespace List.Tests
             ArrayList list = new ArrayList(arrayList);
             ArrayList listToAdd = new ArrayList(arrayListToAdd);
 
-            try
-            {
-                list.AddArrayListAtIndex(listToAdd, index);
-            }
-            catch (System.IndexOutOfRangeException)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<IndexOutOfRangeException>(() => { list.AddArrayListAtIndex(listToAdd, index); });
         }
-
-
     }
 }

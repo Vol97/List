@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace List.Tests
 {
@@ -6,7 +7,6 @@ namespace List.Tests
     {
         [TestCase(10, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 10 })]
         [TestCase(0, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 0 })]
-        [TestCase(-10, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, -10 })]
         [TestCase(-10, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, -10 })]
         [TestCase(-10, new int[0], new int[] { -10 })]
         public void Add_WhenValuePassed_AddThisValueToTheEndOfTheList(int value, int[] linkedList, int[] expectedLinkedList)
@@ -22,6 +22,7 @@ namespace List.Tests
         [TestCase(10, new int[] { 1, 2, 3, 4, 5 }, new int[] { 10, 1, 2, 3, 4, 5 })]
         [TestCase(0, new int[] { 1, 2, 3, 4, 5 }, new int[] { 0, 1, 2, 3, 4, 5 })]
         [TestCase(-10, new int[] { 1, 2, 3, 4, 5 }, new int[] { -10, 1, 2, 3, 4, 5 })]
+        [TestCase(-10, new int[] { }, new int[] { -10 })]
         public void AddFirst_WhenValuePassed_AddThisValueOnTheFisrtPosition(int value, int[] linkedList, int[] expectedLinkedList)
         {
             LinkedList actual = new LinkedList(linkedList);
@@ -55,16 +56,7 @@ namespace List.Tests
         {
             LinkedList list = new LinkedList(linkedList);
 
-            try
-            {
-                list.AddAtIndex(value, index);
-            }
-            catch (System.IndexOutOfRangeException)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<IndexOutOfRangeException>(() => { list.AddAtIndex(value, index); });
         }
 
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4 })]
@@ -86,16 +78,7 @@ namespace List.Tests
         {
             LinkedList list = new LinkedList(arrayList);
 
-            try
-            {
-                list.Remove();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.Remove(); });
         }
 
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 2, 3, 4, 5 })]
@@ -117,22 +100,13 @@ namespace List.Tests
         {
             LinkedList list = new LinkedList(linkedList);
 
-            try
-            {
-                list.RemoveFirst();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.RemoveFirst(); });
         }
 
         [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 3, 4, 5 })]
         [TestCase(2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 4, 5 })]
         [TestCase(3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 5 })]
-        [TestCase(4, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 5 })]
+        [TestCase(4, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4 })]
         [TestCase(0, new int[] { 1 }, new int[] { })]
         public void RemoveAtIndex_WhenIndexPassed_RemoveAValueOnTheGivenIndex(int index, int[] linkedList, int[] expectedLinkedList)
         {
@@ -147,20 +121,12 @@ namespace List.Tests
         [TestCase(6, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(-1, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(5, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(0, new int[] { })]
         public void RemoveAtIndex_WhenIndexIsLessThanZeroOrBiggerThanArrayLength_ThrowIndexOutOfRangeException(int index, int[] linkedList)
         {
             LinkedList list = new LinkedList(linkedList);
 
-            try
-            {
-                list.RemoveAtIndex(index);
-            }
-            catch (System.IndexOutOfRangeException)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<IndexOutOfRangeException>(() => { list.RemoveAtIndex(index); });
         }
 
         [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4 })]
@@ -218,16 +184,7 @@ namespace List.Tests
         {
             LinkedList list = new LinkedList(linkedList);
 
-            try
-            {
-                list.RemoveNElementsAtIndex(numberOfElements, index);
-            }
-            catch (System.IndexOutOfRangeException)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<IndexOutOfRangeException>(() => { list.RemoveNElementsAtIndex(numberOfElements, index); });
         }
 
         [TestCase(1, new int[] { 1, 2, 3, 1, 4, 5, 1 }, 0)]
@@ -244,7 +201,21 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 5, 4, 3, 2, 1 })]
+        [TestCase(new int[] { 0, 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, 0 })]
+        [TestCase(new int[] { 0, 0, 1, 0, 0 }, new int[] { 0, 0, 1, 0, 0 })]
+        [TestCase(new int[] { -1, 2, -3, 4, -5 }, new int[] { -5, 4, -3, 2, -1 })]
+        [TestCase(new int[] { -1 }, new int[] { -1 })]
+        [TestCase(new int[] { }, new int[] { })]
+        public void ReverseArray_WhenCalled_ReverseArrayItsCalledOn(int[] linkedList, int[] expectedLinkedList)
+        {
+            LinkedList actual = new LinkedList(linkedList);
+            LinkedList expected = new LinkedList(expectedLinkedList);
 
+            actual.ReverseArray();
+
+            Assert.AreEqual(expected, actual);
+        }
 
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, 9)]
         [TestCase(new int[] { -3, -9, -100, 100, 10 }, 100)]
@@ -265,16 +236,7 @@ namespace List.Tests
         {
             LinkedList list = new LinkedList(linkedList);
 
-            try
-            {
-                list.MaxValue();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.MaxValue(); });
         }
 
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, 3)]
@@ -295,16 +257,7 @@ namespace List.Tests
         {
             LinkedList list = new LinkedList(linkedList);
 
-            try
-            {
-                list.MinValue();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.MinValue(); });
         }
 
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, 6)]
@@ -326,16 +279,7 @@ namespace List.Tests
         {
             LinkedList list = new LinkedList(linkedList);
 
-            try
-            {
-                list.MaxValueIndex();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail();
+            Assert.Throws<Exception>(() => { list.MaxValueIndex(); });
         }
 
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, 0)]
@@ -356,16 +300,125 @@ namespace List.Tests
         {
             LinkedList list = new LinkedList(linkedList);
 
-            try
-            {
-                list.MinValueIndex();
-            }
-            catch (System.Exception)
-            {
-                Assert.Pass();
-            }
+            Assert.Throws<Exception>(() => { list.MinValueIndex(); });
+        }
 
-            Assert.Fail();
+        [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 3, 3, 4, 6, 7, 7, 8, 9 })]
+        [TestCase(new int[] { -3, -9, -100, 100, 10 }, new int[] { -100, -9, -3, 10, 100 })]
+        [TestCase(new int[] { 1 }, new int[] { 1 })]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
+        [TestCase(new int[0], new int[0])]
+        public void SortAscending_WhenCalled_SortArrayInAscendingOrder(int[] linkedList, int[] expectedLinkedList)
+        {
+            LinkedList actual = new LinkedList(linkedList);
+            LinkedList expected = new LinkedList(expectedLinkedList);
+
+            actual.SortAscending();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 9, 8, 7, 7, 6, 4, 3, 3 })]
+        [TestCase(new int[] { -3, -9, -100, 100, 10 }, new int[] { 100, 10, -3, -9, -100 })]
+        [TestCase(new int[] { 1 }, new int[] { 1 })]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
+        [TestCase(new int[0], new int[0])]
+        public void SortDescending_WhenCalled_SortArrayInDescendingOrder(int[] linkedList, int[] expectedLinkedList)
+        {
+            LinkedList actual = new LinkedList(linkedList);
+            LinkedList expected = new LinkedList(expectedLinkedList);
+
+            actual.SortDescending();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(3, new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 7, 4, 6, 7, 8, 9, 3 })]
+        [TestCase(100, new int[] { -3, -9, -100, 100, 10 }, new int[] { -3, -9, -100, 10 })]
+        [TestCase(2, new int[] { 1 }, new int[] { 1 })]
+        [TestCase(0, new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
+        public void RemoveFirstByValue_WhenValuePassed_RemoveFirstElementWithGivenValue(int value, int[] linkedList, int[] expectedLinkedList)
+        {
+            LinkedList actual = new LinkedList(linkedList);
+            LinkedList expected = new LinkedList(expectedLinkedList);
+
+            actual.RemoveFirstByValue(value);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(3, new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 7, 4, 6, 7, 8, 9 })]
+        [TestCase(100, new int[] { -3, 100, -9, -100, 100, 10, 100 }, new int[] { -3, -9, -100, 10 })]
+        [TestCase(2, new int[] { 1 }, new int[] { 1 })]
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { })]
+        public void RemoveAllByValue_WhenValuePassed_RemoveAllElementsWithGivenValue(int value, int[] linkedList, int[] expectedLinkedList)
+        {
+            LinkedList actual = new LinkedList(linkedList);
+            LinkedList expected = new LinkedList(expectedLinkedList);
+
+            actual.RemoveAllByValue(value);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { 6, 7, 8, 9, 10 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
+        [TestCase(new int[0], new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[0], new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { -1, -2, -3, -4, -5 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 })]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 })]
+        public void AddLinkedList_WhenLinkedListPassed_AddPassedLinkedListToLinkedListTheMethodIsCalledOn(int[] listToAdd, int[] linkedList, int[] expectedLinkedList)
+        {
+            LinkedList actual = new LinkedList(linkedList);
+            LinkedList expected = new LinkedList(expectedLinkedList);
+            LinkedList list = new LinkedList(listToAdd);
+
+            actual.AddLinkedList(list);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { 6, 7, 8, 9, 10 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 6, 7, 8, 9, 10, 1, 2, 3, 4, 5 })]
+        [TestCase(new int[0], new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[0], new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { -1, -2, -3, -4, -5 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { -1, -2, -3, -4, -5, 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5 })]
+        public void AddLinkedListToStart_WhenLinkedListPassed_AddPassedLinkedListToTheStartOfLinkedListTheMethodIsCalledOn(int[] listToAdd, int[] linkedList, int[] expectedLinkedList)
+        {
+            LinkedList actual = new LinkedList(linkedList);
+            LinkedList expected = new LinkedList(expectedLinkedList);
+            LinkedList list = new LinkedList(listToAdd);
+
+            actual.AddLinkedListToStart(list);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { 6, 7, 8, 9, 10 }, 3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 6, 7, 8, 9, 10, 4, 5 })]
+        [TestCase(new int[] { 6, 7, 8, 9, 10 }, 5, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
+        [TestCase(new int[0], 1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, 0, new int[] { }, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { -1, -2, -3, -4, -5 }, 1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, -1, -2, -3, -4, -5, 2, 3, 4, 5 })]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 4, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5 })]
+        public void AddLinkedListAtIndex_WhenArrayListAndIndexPassed_AddPassedArrayListToArrayListOnTheGivenIndex(int[] listToAdd, int index, int[] linkedList, int[] expectedLinkedList)
+        {
+            LinkedList actual = new LinkedList(linkedList);
+            LinkedList expected = new LinkedList(expectedLinkedList);
+            LinkedList list = new LinkedList(listToAdd);
+
+            actual.AddLinkedListAtIndex(list, index);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, 6, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, -1, new int[] { 1, 2, 3, 4, 5 })]
+        public void AddLinkedListAtIndex_WhenIndexIsLessThanZeroOrBiggerThanArrayLength_ThrowIndexOutOfRangeException(int[] linkedListToAdd, int index, int[] linkedList)
+        {
+            LinkedList list = new LinkedList(linkedList);
+            LinkedList listToAdd = new LinkedList(linkedListToAdd);
+
+            Assert.Throws<IndexOutOfRangeException>(() => { list.AddLinkedListAtIndex(listToAdd, index); });
         }
     }
 }

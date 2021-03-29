@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace List
 {
@@ -284,7 +285,19 @@ namespace List
 
         public void ReverseArray()
         {
-            
+            Node prev = null;
+            Node current = _root;
+
+            while (!(current is null))
+            {
+                Node next = current.Next;
+                current.Next = prev;
+                prev = current;
+                current = next;
+            }
+
+            _tail = _root;
+            _root = prev;
         }
 
         public int MaxValue()
@@ -324,7 +337,7 @@ namespace List
             else
             {
                 int maxIndex = 0;
-                
+
                 for (int i = 1; i < Length; i++)
                 {
                     Node current = GetNodeByIndex(maxIndex);
@@ -365,6 +378,174 @@ namespace List
             }
         }
 
+        public void SortAscending()
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                int min = i;
+
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if (GetNodeByIndex(min).Value > GetNodeByIndex(j).Value)
+                    {
+                        min = j;
+                    }
+                }
+
+                int temp = GetNodeByIndex(i).Value;
+                GetNodeByIndex(i).Value = GetNodeByIndex(min).Value;
+                GetNodeByIndex(min).Value = temp;
+            }
+        }
+
+        public void SortDescending()
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                int max = i;
+
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if (GetNodeByIndex(max).Value < GetNodeByIndex(j).Value)
+                    {
+                        max = j;
+                    }
+                }
+
+                int temp = GetNodeByIndex(i).Value;
+                GetNodeByIndex(i).Value = GetNodeByIndex(max).Value;
+                GetNodeByIndex(max).Value = temp;
+            }
+        }
+
+        public void RemoveFirstByValue(int value)
+        {
+            int index = 0;
+
+            while (index < Length)
+            {
+                if (GetNodeByIndex(index).Value == value)
+                {
+                    RemoveAtIndex(index);
+                    return;
+                }
+                else
+                {
+                    ++index;
+                }
+            }
+        }
+
+        public void RemoveAllByValue(int value)
+        {
+            int index = 0;
+
+            while (index < Length)
+            {
+                if (GetNodeByIndex(index).Value == value)
+                {
+                    RemoveAtIndex(index);
+                }
+                else
+                {
+                    ++index;
+                }
+            }
+        }
+
+        public void AddLinkedList(LinkedList linkedList)
+        {
+            if ((!(linkedList._root is null)) && (!(_root is null)))
+            {
+                Length = Length + linkedList.Length;
+
+                Node tmp = _tail;
+                tmp.Next = linkedList._root;
+                _tail = linkedList._tail;
+            }
+            else if (this._root is null)
+            {
+                if (linkedList is null)
+                {
+                    return;
+                }
+                else
+                {
+                    Length = Length + linkedList.Length;
+                    this._root = linkedList._root;
+                }
+            }
+            else
+            {
+                return;
+            }
+
+        }
+
+        public void AddLinkedListToStart(LinkedList linkedList)
+        {
+            if (linkedList._root is null)
+            {
+                return;
+            }
+            else if (this is null)
+            {
+                Length = Length + linkedList.Length;
+
+                this._root = linkedList._root;
+            }
+            else
+            {
+                Length = Length + linkedList.Length;
+
+                Node oldRoot = _root;
+                Node oldTail = linkedList._tail;
+
+                oldTail.Next = oldRoot;
+                _root = linkedList._root;
+            }
+        }
+
+        public void AddLinkedListAtIndex(LinkedList linkedList, int index)
+        {
+            if (index < 0 || index > Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+
+            if (this._root is null || linkedList._root is null)
+            {
+                if (linkedList._root is null)
+                {
+                    return;
+                }
+                else
+                {
+                    this._root = linkedList._root;
+                    Length = Length + linkedList.Length;
+                }
+            }
+            else if (index == 0)
+            {
+                AddLinkedListToStart(linkedList);
+            }
+            else if (index == Length)
+            {
+                AddLinkedList(linkedList);
+            }
+            else
+            {
+                Node previous = GetNodeByIndex(index - 1);
+                Node next = GetNodeByIndex(index);
+
+                previous.Next = linkedList._root;
+                linkedList._tail.Next = next;
+
+                Length = Length + linkedList.Length;
+            }
+        }
+
         private Node GetNodeByIndex(int index)
         {
             if (index < 0 || index >= Length)
@@ -387,26 +568,31 @@ namespace List
 
         public override string ToString()
         {
-            string result = string.Empty;
+            StringBuilder result = new StringBuilder();
 
             if (Length != 0)
             {
                 Node current = _root;
-                result = current.Value + " ";
+                result.Append(current.Value + " ");
 
                 while (!(current.Next is null))
                 {
                     current = current.Next;
-                    result += current.Value + " ";
+                    result.Append(current.Value + " ");
                 }
             }
 
-            return result;
+            return result.ToString();
 
         }
 
         public override bool Equals(object obj)
         {
+            if (obj is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             LinkedList list = (LinkedList)obj;
             bool result = true;
 

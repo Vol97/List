@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace List
 {
@@ -91,7 +92,7 @@ namespace List
 
         public void Remove()
         {
-            if(Length == 0)
+            if (Length == 0)
             {
                 throw new Exception("The list is empty");
             }
@@ -134,7 +135,7 @@ namespace List
 
         public void RemoveNElements(int numberOfElements)
         {
-            if(Length >= numberOfElements)
+            if (Length >= numberOfElements)
             {
                 Length = Length - numberOfElements;
             }
@@ -253,7 +254,7 @@ namespace List
 
         public int MaxValueIndex()
         {
-            if(Length == 0)
+            if (Length == 0)
             {
                 throw new Exception("The list is empty");
             }
@@ -414,25 +415,30 @@ namespace List
 
         public override string ToString()
         {
-            string stringResult = "";
+            StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < Length; i++)
             {
                 if (i == Length - 1)
                 {
-                    stringResult += _array[i];
+                    result.Append(_array[i]);
                 }
                 else
                 {
-                    stringResult += _array[i] + " ";
+                    result.Append(_array[i] + " ");
                 }
             }
 
-            return stringResult;
+            return result.ToString();
         }
 
         public override bool Equals(object obj)
         {
+            if(obj is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             ArrayList list = (ArrayList)obj;
 
             bool result = true;
@@ -494,7 +500,5 @@ namespace List
 
             _array = tmpArray;
         }
-
-
     }
 }
