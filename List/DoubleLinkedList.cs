@@ -356,7 +356,7 @@ namespace List
             return result;
         }
 
-        private DoubleLinkedNode GetNodeByIndex(int index)
+        public DoubleLinkedNode GetNodeByIndex(int index)
         {
             if (index < 0 || index >= Length)
             {

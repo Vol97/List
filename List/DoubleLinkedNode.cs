@@ -16,5 +16,14 @@ namespace List
             Next = null;
             Previous = null;
         }
+
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder();
+
+            result.Append(Value);
+
+            return result.ToString();
+        }
     }
 }
