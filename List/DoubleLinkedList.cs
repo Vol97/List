@@ -277,6 +277,313 @@ namespace List
 
         }
 
+        public int GetFirstIndexByValue(int value)
+        {
+            int index = 0;
+
+            while (index < Length)
+            {
+                DoubleLinkedNode current = GetNodeByIndex(index);
+
+                if (current.Value == value)
+                {
+                    return index;
+                }
+                else
+                {
+                    ++index;
+                }
+            }
+
+            return -1;
+
+        }
+
+        public void Reverse()
+        {
+            DoubleLinkedNode current = _root;
+            DoubleLinkedNode tmp = _tail;
+            int value;
+            int count = 0;
+
+            while (count != Length / 2)
+            {
+                value = current.Value;
+                current.Value = tmp.Value;
+                tmp.Value = value;
+
+                current = current.Next;
+                tmp = tmp.Previous;
+
+                ++count;
+            }
+        }
+
+        public int MaxValue()
+        {
+            if (Length == 0)
+            {
+                throw new Exception("Array length is 0");
+            }
+            else
+            {
+                DoubleLinkedNode res = GetNodeByIndex(MaxValueIndex());
+
+                return res.Value;
+            }
+        }
+
+        public int MinValue()
+        {
+            if (Length == 0)
+            {
+                throw new Exception("Array length is 0");
+            }
+            else
+            {
+                DoubleLinkedNode res = GetNodeByIndex(MinValueIndex());
+
+                return res.Value;
+            }
+        }
+
+        public int MaxValueIndex()
+        {
+            if (Length == 0)
+            {
+                throw new Exception("The list is empty");
+            }
+            else
+            {
+                int maxIndex = 0;
+
+                for (int i = 1; i < Length; i++)
+                {
+                    DoubleLinkedNode current = GetNodeByIndex(maxIndex);
+                    DoubleLinkedNode next = GetNodeByIndex(i);
+
+                    if (current.Value < next.Value)
+                    {
+                        maxIndex = i;
+                    }
+                }
+
+                return maxIndex;
+            }
+        }
+
+        public int MinValueIndex()
+        {
+            if (Length == 0)
+            {
+                throw new Exception("The list is empty");
+            }
+            else
+            {
+                int minIndex = 0;
+
+                for (int i = 1; i < Length; i++)
+                {
+                    DoubleLinkedNode current = GetNodeByIndex(minIndex);
+                    DoubleLinkedNode next = GetNodeByIndex(i);
+
+                    if (current.Value > next.Value)
+                    {
+                        minIndex = i;
+                    }
+                }
+
+                return minIndex;
+            }
+        }
+
+        public void SortAscending()
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                int min = i;
+
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if (GetNodeByIndex(min).Value > GetNodeByIndex(j).Value)
+                    {
+                        min = j;
+                    }
+                }
+
+                int temp = GetNodeByIndex(i).Value;
+                GetNodeByIndex(i).Value = GetNodeByIndex(min).Value;
+                GetNodeByIndex(min).Value = temp;
+            }
+        }
+
+        public void SortDescending()
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                int max = i;
+
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if (GetNodeByIndex(max).Value < GetNodeByIndex(j).Value)
+                    {
+                        max = j;
+                    }
+                }
+
+                int temp = GetNodeByIndex(i).Value;
+                GetNodeByIndex(i).Value = GetNodeByIndex(max).Value;
+                GetNodeByIndex(max).Value = temp;
+            }
+        }
+
+        public void RemoveFirstByValue(int value)
+        {
+            int index = 0;
+
+            while (index < Length)
+            {
+                if (GetNodeByIndex(index).Value == value)
+                {
+                    RemoveAtIndex(index);
+                    return;
+                }
+                else
+                {
+                    ++index;
+                }
+            }
+        }
+
+        public void RemoveAllByValue(int value)
+        {
+            int index = 0;
+
+            while (index < Length)
+            {
+                if (GetNodeByIndex(index).Value == value)
+                {
+                    RemoveAtIndex(index);
+                }
+                else
+                {
+                    ++index;
+                }
+            }
+        }
+
+        public void AddDoubleLinkedList(DoubleLinkedList linkedList)
+        {
+            if ((!(linkedList._root is null)) && (!(_root is null)))
+            {
+                Length = Length + linkedList.Length;
+
+                DoubleLinkedNode tmp = _tail;
+                tmp.Next = linkedList._root;
+                linkedList._root.Previous = tmp;
+                _tail = linkedList._tail;
+            }
+            else if (this._root is null)
+            {
+                if (linkedList is null)
+                {
+                    return;
+                }
+                else
+                {
+                    Length = Length + linkedList.Length;
+                    this._root = linkedList._root;
+                    this._tail = linkedList._tail;
+                }
+            }
+            else
+            {
+                return;
+            }
+
+        }
+
+        public void AddDoubleLinkedListToStart(DoubleLinkedList linkedList)
+        {
+            if ((!(linkedList._root is null)) && (!(_root is null)))
+            {
+                Length = Length + linkedList.Length;
+
+                DoubleLinkedNode oldRoot = _root;
+                DoubleLinkedNode oldTail = linkedList._tail;
+
+                oldTail.Next = oldRoot;
+                oldRoot.Previous = oldTail;
+                _root = linkedList._root;
+            }
+            else if (this._root is null)
+            {
+                if (linkedList is null)
+                {
+                    return;
+                }
+                else
+                {
+                    Length = Length + linkedList.Length;
+                    this._root = linkedList._root;
+                    this._tail = linkedList._tail;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        public void AddDoubleLinkedListAtIndex(DoubleLinkedList linkedList, int index)
+        {
+            if (index < 0 || index > Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            if ((!(linkedList._root is null)) && (!(_root is null)))
+            {
+                if (index == 0)
+                {
+                    AddDoubleLinkedListToStart(linkedList);
+                }
+                else if (index == Length)
+                {
+                    AddDoubleLinkedList(linkedList);
+                }
+                else
+                {
+                    DoubleLinkedNode previous = GetNodeByIndex(index - 1);
+                    DoubleLinkedNode next = GetNodeByIndex(index);
+
+                    previous.Next = linkedList._root;
+                    linkedList._root.Previous = previous;
+                    linkedList._tail.Next = next;
+                    next.Previous = linkedList._tail;
+
+                    Length = Length + linkedList.Length;
+                }
+            }
+            else if (this._root is null)
+            {
+                if (linkedList is null)
+                {
+                    return;
+                }
+                else
+                {
+                    Length = Length + linkedList.Length;
+                    this._root = linkedList._root;
+                    this._tail = linkedList._tail;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
         public override string ToString()
         {
             StringBuilder result = new StringBuilder();
@@ -356,7 +663,7 @@ namespace List
             return result;
         }
 
-        public DoubleLinkedNode GetNodeByIndex(int index)
+        private DoubleLinkedNode GetNodeByIndex(int index)
         {
             if (index < 0 || index >= Length)
             {
@@ -366,7 +673,7 @@ namespace List
             DoubleLinkedNode tmp = _root;
             int count = 0;
 
-            if (index > Length / 2)
+            if (index > Length / 2 + 1)
             {
                 count = Length - 1;
                 tmp = _tail;
@@ -390,24 +697,5 @@ namespace List
 
             return tmp;
         }
-
-        //public string ToStringTest()
-        //{
-        //    StringBuilder result = new StringBuilder();
-
-        //    if (Length != 0)
-        //    {
-        //        DoubleLinkedNode current = _tail;
-        //        result.Append(current.Value + " ");
-
-        //        while (!(current.Previous is null))
-        //        {
-        //            current = current.Previous;
-        //            result.Append(current.Value + " ");
-        //        }
-        //    }
-
-        //    return result.ToString();
-        //}
     }
 }

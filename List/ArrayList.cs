@@ -213,7 +213,7 @@ namespace List
             return -1;
         }
 
-        public void ReverseArray()
+        public void Reverse()
         {
             int[] tmpArray = new int[_array.Length];
             int count = 0;
@@ -434,7 +434,7 @@ namespace List
 
         public override bool Equals(object obj)
         {
-            if(obj is null)
+            if (obj is null)
             {
                 throw new ArgumentNullException();
             }

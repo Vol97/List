@@ -283,7 +283,7 @@ namespace List
 
         }
 
-        public void ReverseArray()
+        public void Reverse()
         {
             Node prev = null;
             Node current = _root;

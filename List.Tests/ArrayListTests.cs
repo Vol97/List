@@ -206,12 +206,12 @@ namespace List.Tests
         [TestCase(new int[] { -1, 2, -3, 4, -5 }, new int[] { -5, 4, -3, 2, -1 })]
         [TestCase(new int[] { -1 }, new int[] { -1 })]
         [TestCase(new int[] { }, new int[] { })]
-        public void ReverseArray_WhenCalled_ReverseArrayItsCalledOn(int[] actualArray, int[] expectedArray)
+        public void Reverse_WhenCalled_ReverseArrayItsCalledOn(int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = new ArrayList(actualArray);
             ArrayList expected = new ArrayList(expectedArray);
 
-            actual.ReverseArray();
+            actual.Reverse();
 
             Assert.AreEqual(expected, actual);
         }

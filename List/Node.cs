@@ -12,5 +12,5 @@ namespace List
             Value = value;
             Next = null;
         }
-}
+    }
 }
