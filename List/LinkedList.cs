@@ -3,11 +3,11 @@ using System.Text;
 
 namespace List
 {
-    public class LinkedList
+    public class LinkedList : IList
     {
-        public int Length { get; private set; }
         private Node _root { get; set; }
         private Node _tail { get; set; }
+        public int Length { get; private set; }
 
         public int this[int index]
         {
@@ -377,44 +377,52 @@ namespace List
                 return minIndex;
             }
         }
-
-        public void SortAscending()
+        /// <summary>
+        /// Descending/Ascending sort
+        /// </summary>
+        /// <param name="sortOrderFlag">Should be 'a' or 'd', for ascending or descending sort order respectively</param>
+        public void Sort(string sortOrderFlag)
         {
-            for (int i = 0; i < Length; i++)
+            switch (sortOrderFlag.ToLower())
             {
-                int min = i;
-
-                for (int j = i + 1; j < Length; j++)
-                {
-                    if (GetNodeByIndex(min).Value > GetNodeByIndex(j).Value)
+                case "a":
+                    for (int i = 0; i < Length; i++)
                     {
-                        min = j;
+                        int min = i;
+
+                        for (int j = i + 1; j < Length; j++)
+                        {
+                            if (GetNodeByIndex(min).Value > GetNodeByIndex(j).Value)
+                            {
+                                min = j;
+                            }
+                        }
+
+                        int temp = GetNodeByIndex(i).Value;
+                        GetNodeByIndex(i).Value = GetNodeByIndex(min).Value;
+                        GetNodeByIndex(min).Value = temp;
                     }
-                }
-
-                int temp = GetNodeByIndex(i).Value;
-                GetNodeByIndex(i).Value = GetNodeByIndex(min).Value;
-                GetNodeByIndex(min).Value = temp;
-            }
-        }
-
-        public void SortDescending()
-        {
-            for (int i = 0; i < Length; i++)
-            {
-                int max = i;
-
-                for (int j = i + 1; j < Length; j++)
-                {
-                    if (GetNodeByIndex(max).Value < GetNodeByIndex(j).Value)
+                    break;
+                case "d":
+                    for (int i = 0; i < Length; i++)
                     {
-                        max = j;
-                    }
-                }
+                        int max = i;
 
-                int temp = GetNodeByIndex(i).Value;
-                GetNodeByIndex(i).Value = GetNodeByIndex(max).Value;
-                GetNodeByIndex(max).Value = temp;
+                        for (int j = i + 1; j < Length; j++)
+                        {
+                            if (GetNodeByIndex(max).Value < GetNodeByIndex(j).Value)
+                            {
+                                max = j;
+                            }
+                        }
+
+                        int temp = GetNodeByIndex(i).Value;
+                        GetNodeByIndex(i).Value = GetNodeByIndex(max).Value;
+                        GetNodeByIndex(max).Value = temp;
+                    }
+                    break;
+                default:
+                    throw new ArgumentException("Wrong argument. Should be 'a' for ascending or 'd' for descending sort");
             }
         }
 
@@ -546,26 +554,6 @@ namespace List
             }
         }
 
-        private Node GetNodeByIndex(int index)
-        {
-            if (index < 0 || index >= Length)
-            {
-                throw new IndexOutOfRangeException();
-            }
-
-            Node tmp = _root;
-            int count = 0;
-
-            while (count != index)
-            {
-                tmp = tmp.Next;
-
-                ++count;
-            }
-
-            return tmp;
-        }
-
         public override string ToString()
         {
             StringBuilder result = new StringBuilder();
@@ -631,5 +619,26 @@ namespace List
 
             return result;
         }
+
+        private Node GetNodeByIndex(int index)
+        {
+            if (index < 0 || index >= Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            Node tmp = _root;
+            int count = 0;
+
+            while (count != index)
+            {
+                tmp = tmp.Next;
+
+                ++count;
+            }
+
+            return tmp;
+        }
+ 
     }
 }

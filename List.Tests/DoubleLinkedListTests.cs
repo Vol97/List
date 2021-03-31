@@ -305,34 +305,36 @@ namespace List.Tests
             Assert.Throws<Exception>(() => { list.MinValueIndex(); });
         }
 
-        [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 3, 3, 4, 6, 7, 7, 8, 9 })]
-        [TestCase(new int[] { -3, -9, -100, 100, 10 }, new int[] { -100, -9, -3, 10, 100 })]
-        [TestCase(new int[] { 1 }, new int[] { 1 })]
-        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
-        [TestCase(new int[0], new int[0])]
-        public void SortAscending_WhenCalled_SortArrayInAscendingOrder(int[] doubleLinkedList, int[] expectedDoubleLinkedList)
+        [TestCase("a", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 3, 3, 4, 6, 7, 7, 8, 9 })]
+        [TestCase("A", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 3, 3, 4, 6, 7, 7, 8, 9 })]
+        [TestCase("a", new int[] { -3, -9, -100, 100, 10 }, new int[] { -100, -9, -3, 10, 100 })]
+        [TestCase("a", new int[] { 1 }, new int[] { 1 })]
+        [TestCase("a", new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
+        [TestCase("a", new int[0], new int[0])]
+        [TestCase("d", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 9, 8, 7, 7, 6, 4, 3, 3 })]
+        [TestCase("D", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 9, 8, 7, 7, 6, 4, 3, 3 })]
+        [TestCase("d", new int[] { -3, -9, -100, 100, 10 }, new int[] { 100, 10, -3, -9, -100 })]
+        [TestCase("d", new int[] { 1 }, new int[] { 1 })]
+        [TestCase("d", new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
+        [TestCase("d", new int[0], new int[0])]
+        public void Sort_WhenCorrectFlagIsPassed_SortsArrayByDescendingOrAscendingOrder(string flag, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
             DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
             DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
 
-            actual.SortAscending();
+            actual.Sort(flag);
 
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 9, 8, 7, 7, 6, 4, 3, 3 })]
-        [TestCase(new int[] { -3, -9, -100, 100, 10 }, new int[] { 100, 10, -3, -9, -100 })]
-        [TestCase(new int[] { 1 }, new int[] { 1 })]
-        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
-        [TestCase(new int[0], new int[0])]
-        public void SortDescending_WhenCalled_SortArrayInDescendingOrder(int[] doubleLinkedList, int[] expectedDoubleLinkedList)
+        [TestCase("q", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 })]
+        [TestCase("ad", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 })]
+        [TestCase("da", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 })]
+        public void Sort_WhenIncorrectFlagIsPassed_ThrowArgumentException(string flag, int[] doubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
 
-            actual.SortDescending();
-
-            Assert.AreEqual(expected, actual);
+            Assert.Throws<ArgumentException>(() => { list.Sort(flag); });
         }
 
         [TestCase(3, new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 7, 4, 6, 7, 8, 9, 3 })]

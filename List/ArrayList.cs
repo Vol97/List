@@ -3,7 +3,7 @@ using System.Text;
 
 namespace List
 {
-    public class ArrayList
+    public class ArrayList : IList
     {
         private int[] _array;
 
@@ -58,7 +58,7 @@ namespace List
 
             _array = array;
 
-            UpSize();
+            CheckAndChangeSize();
         }
 
         public void Add(int value)
@@ -295,44 +295,52 @@ namespace List
                 return minIndex;
             }
         }
-
-        public void SortAscending()
+        /// <summary>
+        /// Descending/Ascending sort
+        /// </summary>
+        /// <param name="sortOrderFlag">Should be 'a' or 'd', for ascending or descending sort order respectively</param>
+        public void Sort(string sortOrderFlag)
         {
-            for (int i = 0; i < Length; i++)
+            switch (sortOrderFlag.ToLower())
             {
-                int min = i;
-
-                for (int j = i + 1; j < Length; j++)
-                {
-                    if (_array[min] > _array[j])
+                case "a":
+                    for (int i = 0; i < Length; i++)
                     {
-                        min = j;
+                        int min = i;
+
+                        for (int j = i + 1; j < Length; j++)
+                        {
+                            if (_array[min] > _array[j])
+                            {
+                                min = j;
+                            }
+                        }
+
+                        int temp = _array[i];
+                        _array[i] = _array[min];
+                        _array[min] = temp;
                     }
-                }
-
-                int temp = _array[i];
-                _array[i] = _array[min];
-                _array[min] = temp;
-            }
-        }
-
-        public void SortDescending()
-        {
-            for (int i = 0; i < Length; i++)
-            {
-                int max = i;
-
-                for (int j = i + 1; j < Length; j++)
-                {
-                    if (_array[max] < _array[j])
+                    break;
+                case "d":
+                    for (int i = 0; i < Length; i++)
                     {
-                        max = j;
-                    }
-                }
+                        int max = i;
 
-                int temp = _array[i];
-                _array[i] = _array[max];
-                _array[max] = temp;
+                        for (int j = i + 1; j < Length; j++)
+                        {
+                            if (_array[max] < _array[j])
+                            {
+                                max = j;
+                            }
+                        }
+
+                        int temp = _array[i];
+                        _array[i] = _array[max];
+                        _array[max] = temp;
+                    }
+                    break;
+                default:
+                    throw new ArgumentException("Wrong argument. Should be 'a' for ascending or 'd' for descending sort");
             }
         }
 
@@ -460,45 +468,34 @@ namespace List
 
         private void CheckAndChangeSize()
         {
+            int newLength = Length >= _array.Length ? (int)(_array.Length * 1.33 + 1) : (int)(_array.Length * 0.66 + 1);
+            int[] tmpArray = new int[newLength];
+
             if (Length >= _array.Length)
             {
                 while (Length >= _array.Length)
                 {
-                    UpSize();
+                    newLength = (int)(_array.Length * 1.33 + 1);
+
+                    tmpArray = new int[newLength];
+
+                    for (int i = 0; i < _array.Length; i++)
+                    {
+                        tmpArray[i] = _array[i];
+                    }
+
+                    _array = tmpArray;
                 }
             }
             else if (Length <= _array.Length / 2 + 1)
             {
-                DownSize();
+                for (int i = 0; i < Length; i++)
+                {
+                    tmpArray[i] = _array[i];
+                }
+
+                _array = tmpArray;
             }
-        }
-
-        private void UpSize()
-        {
-            int newLength = (int)(_array.Length * 1.33 + 1);
-
-            int[] tmpArray = new int[newLength];
-
-            for (int i = 0; i < _array.Length; i++)
-            {
-                tmpArray[i] = _array[i];
-            }
-
-            _array = tmpArray;
-        }
-
-        private void DownSize()
-        {
-            int newLength = (int)(_array.Length * 0.66 + 1);
-
-            int[] tmpArray = new int[newLength];
-
-            for (int i = 0; i < Length; i++)
-            {
-                tmpArray[i] = _array[i];
-            }
-
-            _array = tmpArray;
         }
     }
 }
