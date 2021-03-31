@@ -379,18 +379,24 @@ namespace List
             }
         }
 
-        public void AddArrayList(ArrayList arrayList)
+        public void AddList(IList list)
         {
-            AddArrayListAtIndex(arrayList, Length);
+            ArrayList arrayList = (ArrayList)list;
+
+            AddListAtIndex(arrayList, Length);
         }
 
-        public void AddArrayListToStart(ArrayList arrayList)
+        public void AddListToStart(IList list)
         {
-            AddArrayListAtIndex(arrayList, 0);
+            ArrayList arrayList = (ArrayList)list;
+
+            AddListAtIndex(arrayList, 0);
         }
 
-        public void AddArrayListAtIndex(ArrayList arrayList, int index)
+        public void AddListAtIndex(IList list, int index)
         {
+            ArrayList arrayList = (ArrayList)list;
+
             if (index < 0 || index > Length)
             {
                 throw new IndexOutOfRangeException();

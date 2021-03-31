@@ -461,8 +461,10 @@ namespace List
             }
         }
 
-        public void AddLinkedList(LinkedList linkedList)
+        public void AddList(IList list)
         {
+            LinkedList linkedList = (LinkedList)list;
+
             if ((!(linkedList._root is null)) && (!(_root is null)))
             {
                 Length = Length + linkedList.Length;
@@ -490,8 +492,10 @@ namespace List
 
         }
 
-        public void AddLinkedListToStart(LinkedList linkedList)
+        public void AddListToStart(IList list)
         {
+            LinkedList linkedList = (LinkedList)list;
+
             if (linkedList._root is null)
             {
                 return;
@@ -514,8 +518,10 @@ namespace List
             }
         }
 
-        public void AddLinkedListAtIndex(LinkedList linkedList, int index)
+        public void AddListAtIndex(IList list, int index)
         {
+            LinkedList linkedList = (LinkedList)list;
+
             if (index < 0 || index > Length)
             {
                 throw new IndexOutOfRangeException();
@@ -536,11 +542,11 @@ namespace List
             }
             else if (index == 0)
             {
-                AddLinkedListToStart(linkedList);
+                AddListToStart(linkedList);
             }
             else if (index == Length)
             {
-                AddLinkedList(linkedList);
+                AddList(linkedList);
             }
             else
             {

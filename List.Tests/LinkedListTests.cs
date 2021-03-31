@@ -375,7 +375,7 @@ namespace List.Tests
             LinkedList expected = new LinkedList(expectedLinkedList);
             LinkedList list = new LinkedList(listToAdd);
 
-            actual.AddLinkedList(list);
+            actual.AddList(list);
 
             Assert.AreEqual(expected, actual);
         }
@@ -386,13 +386,13 @@ namespace List.Tests
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { -1, -2, -3, -4, -5, 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5 })]
-        public void AddLinkedListToStart_WhenLinkedListPassed_AddPassedLinkedListToTheStartOfLinkedListTheMethodIsCalledOn(int[] listToAdd, int[] linkedList, int[] expectedLinkedList)
+        public void AddListToStart_WhenLinkedListPassed_AddPassedLinkedListToTheStartOfLinkedListTheMethodIsCalledOn(int[] listToAdd, int[] linkedList, int[] expectedLinkedList)
         {
             LinkedList actual = new LinkedList(linkedList);
             LinkedList expected = new LinkedList(expectedLinkedList);
             LinkedList list = new LinkedList(listToAdd);
 
-            actual.AddLinkedListToStart(list);
+            actual.AddListToStart(list);
 
             Assert.AreEqual(expected, actual);
         }
@@ -403,25 +403,25 @@ namespace List.Tests
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, 0, new int[] { }, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, 1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, -1, -2, -3, -4, -5, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 4, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5 })]
-        public void AddLinkedListAtIndex_WhenArrayListAndIndexPassed_AddPassedArrayListToArrayListOnTheGivenIndex(int[] listToAdd, int index, int[] linkedList, int[] expectedLinkedList)
+        public void AddListAtIndex_WhenLinkedListAndIndexPassed_AddPassedLinkedListToLinkedListOnTheGivenIndex(int[] listToAdd, int index, int[] linkedList, int[] expectedLinkedList)
         {
             LinkedList actual = new LinkedList(linkedList);
             LinkedList expected = new LinkedList(expectedLinkedList);
             LinkedList list = new LinkedList(listToAdd);
 
-            actual.AddLinkedListAtIndex(list, index);
+            actual.AddListAtIndex(list, index);
 
             Assert.AreEqual(expected, actual);
         }
 
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, 6, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, -1, new int[] { 1, 2, 3, 4, 5 })]
-        public void AddLinkedListAtIndex_WhenIndexIsLessThanZeroOrBiggerThanArrayLength_ThrowIndexOutOfRangeException(int[] linkedListToAdd, int index, int[] linkedList)
+        public void AddListAtIndex_WhenIndexIsLessThanZeroOrBiggerThanArrayLength_ThrowIndexOutOfRangeException(int[] linkedListToAdd, int index, int[] linkedList)
         {
             LinkedList list = new LinkedList(linkedList);
             LinkedList listToAdd = new LinkedList(linkedListToAdd);
 
-            Assert.Throws<IndexOutOfRangeException>(() => { list.AddLinkedListAtIndex(listToAdd, index); });
+            Assert.Throws<IndexOutOfRangeException>(() => { list.AddListAtIndex(listToAdd, index); });
         }
     }
 }

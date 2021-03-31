@@ -4,7 +4,7 @@ using System.Text;
 
 namespace List
 {
-    interface IList
+    public interface IList
     {
         public int this[int index] { get; set; }
 
@@ -43,6 +43,12 @@ namespace List
         public void RemoveFirstByValue(int value);
 
         public void RemoveAllByValue(int value);
+
+        public void AddList(IList list);
+
+        public void AddListToStart(IList list);
+
+        public void AddListAtIndex(IList list, int index);
 
         public string ToString();
 
