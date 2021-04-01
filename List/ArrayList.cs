@@ -47,18 +47,27 @@ namespace List
             _array[0] = value;
         }
 
-        public ArrayList(int[] array)
+        private ArrayList(int[] array)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException();
-            }
-
             Length = array.Length;
 
             _array = array;
 
             CheckAndChangeSize();
+        }
+
+        public static ArrayList CreateArrayList(int[] array)
+        {
+            if(array is null)
+            {
+                throw new ArgumentNullException();
+            }
+            else
+            {
+                ArrayList arrayList = new ArrayList(array);
+
+                return arrayList;
+            }
         }
 
         public void Add(int value)

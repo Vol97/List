@@ -61,7 +61,7 @@ namespace List
             _tail = _root;
         }
 
-        public LinkedList(int[] values)
+        private LinkedList(int[] values)
         {
             Length = values.Length;
 
@@ -82,6 +82,20 @@ namespace List
                 _tail = null;
             }
 
+        }
+
+        public static LinkedList CreateLinkedList(int[] array)
+        {
+            if (array is null)
+            {
+                throw new ArgumentNullException();
+            }
+            else
+            {
+                LinkedList linkedList = new LinkedList(array);
+
+                return linkedList;
+            }
         }
 
         public void Add(int value)
@@ -576,7 +590,8 @@ namespace List
                 }
             }
 
-            return result.ToString();
+
+            return result.ToString().TrimEnd();
 
         }
 
@@ -626,13 +641,20 @@ namespace List
             return result;
         }
 
-        private Node GetNodeByIndex(int index)
+        public Node GetNodeCheck(int index)
         {
             if (index < 0 || index >= Length)
             {
                 throw new IndexOutOfRangeException();
             }
+            else
+            {
+                return GetNodeByIndex(index);
+            }
+        }
 
+        private Node GetNodeByIndex(int index)
+        {
             Node tmp = _root;
             int count = 0;
 
@@ -645,6 +667,5 @@ namespace List
 
             return tmp;
         }
- 
     }
 }
