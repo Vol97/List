@@ -61,7 +61,7 @@ namespace List
             _tail = _root;
         }
 
-        public DoubleLinkedList(int[] values)
+        private DoubleLinkedList(int[] values)
         {
             Length = values.Length;
 
@@ -83,6 +83,20 @@ namespace List
                 _tail = null;
             }
 
+        }
+
+        public static DoubleLinkedList CreateDoubleLinkedList(int[] array)
+        {
+            if (array is null)
+            {
+                throw new ArgumentNullException();
+            }
+            else
+            {
+                DoubleLinkedList linkedList = new DoubleLinkedList(array);
+
+                return linkedList;
+            }
         }
 
         public void Add(int value)
@@ -483,6 +497,11 @@ namespace List
 
         public void AddList(IList list)
         {
+            if(list is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             DoubleLinkedList linkedList = (DoubleLinkedList)list;
 
             if ((!(linkedList._root is null)) && (!(_root is null)))
@@ -496,7 +515,7 @@ namespace List
             }
             else if (this._root is null)
             {
-                if (linkedList is null)
+                if (linkedList._root is null)
                 {
                     return;
                 }
@@ -516,6 +535,11 @@ namespace List
 
         public void AddListToStart(IList list)
         {
+            if (list is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             DoubleLinkedList linkedList = (DoubleLinkedList)list;
 
             if ((!(linkedList._root is null)) && (!(_root is null)))
@@ -531,7 +555,7 @@ namespace List
             }
             else if (this._root is null)
             {
-                if (linkedList is null)
+                if (linkedList._root is null)
                 {
                     return;
                 }
@@ -550,12 +574,16 @@ namespace List
 
         public void AddListAtIndex(IList list, int index)
         {
-            DoubleLinkedList linkedList = (DoubleLinkedList)list;
-
+            if (list is null)
+            {
+                throw new ArgumentNullException();
+            }
             if (index < 0 || index > Length)
             {
                 throw new IndexOutOfRangeException();
             }
+
+            DoubleLinkedList linkedList = (DoubleLinkedList)list;
 
             if ((!(linkedList._root is null)) && (!(_root is null)))
             {
@@ -582,7 +610,7 @@ namespace List
             }
             else if (this._root is null)
             {
-                if (linkedList is null)
+                if (linkedList._root is null)
                 {
                     return;
                 }
@@ -615,7 +643,7 @@ namespace List
                 }
             }
 
-            return result.ToString();
+            return result.ToString().TrimEnd();
         }
 
         public override bool Equals(object obj)

@@ -11,8 +11,8 @@ namespace List.Tests
         [TestCase(-10, new int[0], new int[] { -10 })]
         public void Add_WhenValuePassed_AddThisValueToTheEndOfTheList(int value, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.Add(value);
 
@@ -25,8 +25,8 @@ namespace List.Tests
         [TestCase(-10, new int[] { }, new int[] { -10 })]
         public void AddFirst_WhenValuePassed_AddThisValueOnTheFisrtPosition(int value, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.AddFirst(value);
 
@@ -41,8 +41,8 @@ namespace List.Tests
         [TestCase(-10, 0, new int[] { 1 }, new int[] { -10, 1 })]
         public void AddAtIndex_WhenValuePassed_AddThisValueOnTheGivenIndex(int value, int index, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.AddAtIndex(value, index);
 
@@ -54,7 +54,7 @@ namespace List.Tests
         [TestCase(10, 5, new int[] { 1, 2, 3, 4, 5 })]
         public void AddAtIndex_WhenIndexIsLessThanZeroOrBiggerOrEqualsArrayLength_ThrowIndexOutOfRangeException(int value, int index, int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             Assert.Throws<IndexOutOfRangeException>(() => { list.AddAtIndex(value, index); });
         }
@@ -65,8 +65,8 @@ namespace List.Tests
         [TestCase(new int[] { 1 }, new int[] { })]
         public void Remove_WhenCalled_RemoveAValueFromTheEndOfTheList(int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.Remove();
 
@@ -76,7 +76,7 @@ namespace List.Tests
         [TestCase(new int[0])]
         public void Remove_WhenUsedOnZeroLengthArray_ThrowException(int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             Assert.Throws<Exception>(() => { list.Remove(); });
         }
@@ -87,8 +87,8 @@ namespace List.Tests
         [TestCase(new int[] { 1 }, new int[] { })]
         public void RemoveFirst_WhenCalled_RemoveAValueFromTheStartOfTheList(int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.RemoveFirst();
 
@@ -98,7 +98,7 @@ namespace List.Tests
         [TestCase(new int[0])]
         public void RemoveFirst_WhenUsedOnZeroLengthArray_ThrowException(int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             Assert.Throws<Exception>(() => { list.RemoveFirst(); });
         }
@@ -110,8 +110,8 @@ namespace List.Tests
         [TestCase(0, new int[] { 1 }, new int[] { })]
         public void RemoveAtIndex_WhenIndexPassed_RemoveAValueOnTheGivenIndex(int index, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.RemoveAtIndex(index);
 
@@ -124,7 +124,7 @@ namespace List.Tests
         [TestCase(0, new int[] { })]
         public void RemoveAtIndex_WhenIndexIsLessThanZeroOrBiggerThanArrayLength_ThrowIndexOutOfRangeException(int index, int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             Assert.Throws<IndexOutOfRangeException>(() => { list.RemoveAtIndex(index); });
         }
@@ -138,8 +138,8 @@ namespace List.Tests
         [TestCase(5, new int[] { 1, 2, 3, 4, 5 }, new int[] { })]
         public void RemoveNElements_WhenNumberOfElementsPassed_RemoveNElemetsFromTheEndOfTheList(int numberOfElements, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.RemoveNElements(numberOfElements);
 
@@ -155,8 +155,8 @@ namespace List.Tests
         [TestCase(1, new int[] { 1 }, new int[] { })]
         public void RemoveFirstNElements_WhenNumberOfElementsPassed_RemoveNElemetsFromTheStartOfTheList(int numberOfElements, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.RemoveFirstNElements(numberOfElements);
 
@@ -170,8 +170,8 @@ namespace List.Tests
         [TestCase(7, 0, new int[] { 1, 2, 3, 4, 5 }, new int[] { })]
         public void RemoveNElementsAtIndex_WhenNumberOfElementsPassed_RemoveNElemetsFromTheStartOfTheList(int numberOfElements, int index, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.RemoveNElementsAtIndex(numberOfElements, index);
 
@@ -182,7 +182,7 @@ namespace List.Tests
         [TestCase(2, -1, new int[] { 1, 2, 3, 4, 5 })]
         public void RemoveNElementsAtIndex_WhenIndexIsLessThanZeroOrBiggerThanArrayLength_ThrowIndexOutOfRangeException(int numberOfElements, int index, int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             Assert.Throws<IndexOutOfRangeException>(() => { list.RemoveNElementsAtIndex(numberOfElements, index); });
         }
@@ -194,7 +194,7 @@ namespace List.Tests
         [TestCase(7, new int[] { 1, 2, 3, 4, 5 }, -1)]
         public void GetFirstIndexByValue_WhenValuePassed_ReturnIndexOfTheElementsWithGivenValue(int value, int[] doubleLinkedList, int expected)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             int actual = list.GetFirstIndexByValue(value);
 
@@ -211,8 +211,8 @@ namespace List.Tests
         [TestCase(new int[] { }, new int[] { })]
         public void Reverse_WhenCalled_ReverseArrayItsCalledOn(int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.Reverse();
 
@@ -226,7 +226,7 @@ namespace List.Tests
         [TestCase(new int[] { 10, 100, 10, 11 }, 100)]
         public void MaxValue_WhenCalled_ReturnTheMaxValueOfTheArray(int[] array, int expected)
         {
-            DoubleLinkedList list = new DoubleLinkedList(array);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(array);
 
             int actual = list.MaxValue();
 
@@ -236,7 +236,7 @@ namespace List.Tests
         [TestCase(new int[0])]
         public void MaxValue_WhenUsedOnZeroLengthArray_ThrowException(int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             Assert.Throws<Exception>(() => { list.MaxValue(); });
         }
@@ -247,7 +247,7 @@ namespace List.Tests
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1 }, 1)]
         public void MinValue_WhenCalled_ReturnTheMinValueOfTheArray(int[] array, int expected)
         {
-            DoubleLinkedList list = new DoubleLinkedList(array);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(array);
 
             int actual = list.MinValue();
 
@@ -257,7 +257,7 @@ namespace List.Tests
         [TestCase(new int[0])]
         public void MinValue_WhenUsedOnZeroLengthArray_ThrowException(int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             Assert.Throws<Exception>(() => { list.MinValue(); });
         }
@@ -269,7 +269,7 @@ namespace List.Tests
         [TestCase(new int[] { 10, 100, 10, 11 }, 1)]
         public void MaxValueIndex_WhenCalled_ReturnTheMaxValueIndex(int[] array, int expected)
         {
-            DoubleLinkedList list = new DoubleLinkedList(array);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(array);
 
             int actual = list.MaxValueIndex();
 
@@ -279,7 +279,7 @@ namespace List.Tests
         [TestCase(new int[0])]
         public void MaxValueIndex_WhenUsedOnZeroLengthArray_ThrowException(int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             Assert.Throws<Exception>(() => { list.MaxValueIndex(); });
         }
@@ -290,7 +290,7 @@ namespace List.Tests
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1 }, 0)]
         public void MinValueIndex_WhenCalled_ReturnTheMinValueIndex(int[] array, int expected)
         {
-            DoubleLinkedList list = new DoubleLinkedList(array);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(array);
 
             int actual = list.MinValueIndex();
 
@@ -300,7 +300,7 @@ namespace List.Tests
         [TestCase(new int[0])]
         public void MinValueIndex_WhenUsedOnZeroLengthArray_ThrowException(int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             Assert.Throws<Exception>(() => { list.MinValueIndex(); });
         }
@@ -319,8 +319,8 @@ namespace List.Tests
         [TestCase("d", new int[0], new int[0])]
         public void Sort_WhenCorrectFlagIsPassed_SortsArrayByDescendingOrAscendingOrder(string flag, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.Sort(flag);
 
@@ -332,7 +332,7 @@ namespace List.Tests
         [TestCase("da", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 })]
         public void Sort_WhenIncorrectFlagIsPassed_ThrowArgumentException(string flag, int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
 
             Assert.Throws<ArgumentException>(() => { list.Sort(flag); });
         }
@@ -343,8 +343,8 @@ namespace List.Tests
         [TestCase(0, new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
         public void RemoveFirstByValue_WhenValuePassed_RemoveFirstElementWithGivenValue(int value, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.RemoveFirstByValue(value);
 
@@ -357,8 +357,8 @@ namespace List.Tests
         [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { })]
         public void RemoveAllByValue_WhenValuePassed_RemoveAllElementsWithGivenValue(int value, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
 
             actual.RemoveAllByValue(value);
 
@@ -367,62 +367,187 @@ namespace List.Tests
 
         [TestCase(new int[] { 6, 7, 8, 9, 10 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
         [TestCase(new int[0], new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[0], new int[0], new int[0])]
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[0], new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 })]
         public void AddList_WhenDoubleLinkedListPassed_AddPassedDoubleLinkedListToDoubleLinkedListTheMethodIsCalledOn(int[] listToAdd, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
-            DoubleLinkedList list = new DoubleLinkedList(listToAdd);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(listToAdd);
 
             actual.AddList(list);
 
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(null, new int[] { 1, 2 })]
+        public void AddList_WhenNullPassed_ThrowArgumentNullException(IList array, int[] linkedList)
+        {
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(linkedList);
+
+            Assert.Throws<ArgumentNullException>(() => list.AddList(array));
+        }
+
         [TestCase(new int[] { 6, 7, 8, 9, 10 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 6, 7, 8, 9, 10, 1, 2, 3, 4, 5 })]
         [TestCase(new int[0], new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[0], new int[0], new int[0])]
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[0], new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { -1, -2, -3, -4, -5, 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5 })]
         public void AddListToStart_WhenDoubleLinkedListPassed_AddPassedDoubleLinkedListToTheStartOfDoubleLinkedListTheMethodIsCalledOn(int[] listToAdd, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
-            DoubleLinkedList list = new DoubleLinkedList(listToAdd);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(listToAdd);
 
             actual.AddListToStart(list);
 
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(null, new int[] { 1, 2 })]
+        public void AddListToStart_WhenNullPassed_ThrowArgumentNullException(IList array, int[] linkedList)
+        {
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(linkedList);
+
+            Assert.Throws<ArgumentNullException>(() => list.AddListToStart(array));
+        }
+
         [TestCase(new int[] { 6, 7, 8, 9, 10 }, 3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 6, 7, 8, 9, 10, 4, 5 })]
         [TestCase(new int[] { 6, 7, 8, 9, 10 }, 5, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
         [TestCase(new int[0], 1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[0], 0, new int[0], new int[0])]
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, 0, new int[] { }, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, 0, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, 5, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, 1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, -1, -2, -3, -4, -5, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 4, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5 })]
         public void AddListAtIndex_WhenDoubleLinkedListAndIndexPassed_AddPassedDoubleLinkedListToDoubleLinkedListOnTheGivenIndex(int[] listToAdd, int index, int[] doubleLinkedList, int[] expectedDoubleLinkedList)
         {
-            DoubleLinkedList actual = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList expected = new DoubleLinkedList(expectedDoubleLinkedList);
-            DoubleLinkedList list = new DoubleLinkedList(listToAdd);
+            DoubleLinkedList actual = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList expected = DoubleLinkedList.CreateDoubleLinkedList(expectedDoubleLinkedList);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(listToAdd);
 
             actual.AddListAtIndex(list, index);
 
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(null, new int[] { 1, 2 }, 1)]
+        public void AddListAtIndex_WhenNullPassed_ThrowArgumentNullException(IList array, int[] linkedList, int index)
+        {
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(linkedList);
+
+            Assert.Throws<ArgumentNullException>(() => list.AddListAtIndex(array, index));
+        }
+
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, 6, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, -1, new int[] { 1, 2, 3, 4, 5 })]
         public void AddListAtIndex_WhenIndexIsLessThanZeroOrBiggerThanArrayLength_ThrowIndexOutOfRangeException(int[] doubleLinkedListToAdd, int index, int[] doubleLinkedList)
         {
-            DoubleLinkedList list = new DoubleLinkedList(doubleLinkedList);
-            DoubleLinkedList listToAdd = new DoubleLinkedList(doubleLinkedListToAdd);
+            DoubleLinkedList list = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedList);
+            DoubleLinkedList listToAdd = DoubleLinkedList.CreateDoubleLinkedList(doubleLinkedListToAdd);
 
             Assert.Throws<IndexOutOfRangeException>(() => { list.AddListAtIndex(listToAdd, index); });
+        }
+
+        [TestCase(0)]
+        public void DoubleLinkedListEmptyConstructor_WhenObjectOfAClassIsCreated_LengthEqualsZero(int expected)
+        {
+            DoubleLinkedList actualList = new DoubleLinkedList();
+            int actual = actualList.Length;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(0, 1)]
+        public void DoubleLinkedListConstructorWithNValue_WhenObjectIsCreatedWithGivenValue_ListLengthEqualsOne(int value, int expected)
+        {
+            DoubleLinkedList actualList = new DoubleLinkedList(value);
+            int actual = actualList.Length;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(null)]
+        public void DoubleLinkedListConstructorWithArray_WhenNullPassed_ThrowArgumentNullException(int[] array)
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                DoubleLinkedList arrayList = DoubleLinkedList.CreateDoubleLinkedList(array);
+            });
+
+        }
+
+        [TestCase(0, new int[] { 1, 2, 3, 4, 5 }, 1)]
+        [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, 2)]
+        [TestCase(2, new int[] { 1, 2, 3, 4, 5 }, 3)]
+        [TestCase(3, new int[] { 1, 2, 3, 4, 5 }, 4)]
+        [TestCase(4, new int[] { 1, 2, 3, 4, 5 }, 5)]
+        [TestCase(0, new int[] { 1 }, 1)]
+        public void DoubleLinkedListIndexer_WhenLookingForValueByIndex_ReturnValue(int index, int[] array, int expected)
+        {
+            DoubleLinkedList arrayList = DoubleLinkedList.CreateDoubleLinkedList(array);
+
+            int actual = arrayList[index];
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(0, new int[] { 1, 2, 3, 4, 5 }, 9, 9)]
+        [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, 9, 9)]
+        [TestCase(2, new int[] { 1, 2, 3, 4, 5 }, 9, 9)]
+        [TestCase(3, new int[] { 1, 2, 3, 4, 5 }, 9, 9)]
+        [TestCase(4, new int[] { 1, 2, 3, 4, 5 }, 9, 9)]
+        [TestCase(0, new int[] { 1 }, 9, 9)]
+        public void DoubleLinkedListIndexer_WhenChangingValue_ReturnNewValue(int index, int[] array, int newValue, int expected)
+        {
+            DoubleLinkedList arrayList = DoubleLinkedList.CreateDoubleLinkedList(array);
+
+            array[index] = newValue;
+            int actual = array[index];
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(-1, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(5, new int[] { 1, 2, 3, 4, 5 })]
+        public void DoubleLinkedListIndexerSet_WhenNegativeIndexOrIndexBiggerOrEqualToLengthIsPassed_ThrowIndexOutOfRangeException(int index, int[] array)
+        {
+            DoubleLinkedList arrayList = DoubleLinkedList.CreateDoubleLinkedList(array);
+
+            Assert.Throws<IndexOutOfRangeException>(() =>
+            {
+                arrayList[index] = 1;
+            });
+        }
+
+        [TestCase(-1, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(5, new int[] { 1, 2, 3, 4, 5 })]
+        public void DoubleLinkedListIndexerGet_WhenNegativeIndexOrIndexBiggerOrEqualToLengthIsPassed_ThrowIndexOutOfRangeException(int index, int[] array)
+        {
+            DoubleLinkedList arrayList = DoubleLinkedList.CreateDoubleLinkedList(array);
+            int newValue = 0;
+
+            Assert.Throws<IndexOutOfRangeException>(() =>
+            {
+                newValue = arrayList[index];
+            });
+        }
+
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, "1 2 3 4 5")]
+        [TestCase(new int[] { 1 }, "1")]
+        [TestCase(new int[] { }, "")]
+        public void ToString_WhenDoubleLinkedListPassed_ReturnItAsAString(int[] array, string expected)
+        {
+            DoubleLinkedList arrayList = DoubleLinkedList.CreateDoubleLinkedList(array);
+
+            string actual = arrayList.ToString();
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }

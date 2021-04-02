@@ -377,6 +377,14 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(null, new int[] { 1, 2 })]
+        public void AddList_WhenNullPassed_ThrowArgumentNullException(IList array, int[] arrayList)
+        {
+            ArrayList list = ArrayList.CreateArrayList(arrayList);
+
+            Assert.Throws<ArgumentNullException>(() => list.AddList(array));
+        }
+
         [TestCase(new int[] { 6, 7, 8, 9, 10 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 6, 7, 8, 9, 10, 1, 2, 3, 4, 5 })]
         [TestCase(new int[0], new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { -1, -2, -3, -4, -5, 1, 2, 3, 4, 5 })]
@@ -393,6 +401,14 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(null, new int[] { 1, 2 })]
+        public void AddListToStart_WhenNullPassed_ThrowArgumentNullException(IList array, int[] arrayList)
+        {
+            ArrayList list = ArrayList.CreateArrayList(arrayList);
+
+            Assert.Throws<ArgumentNullException>(() => list.AddListToStart(array));
+        }
+
         [TestCase(new int[] { 6, 7, 8, 9, 10 }, 3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 6, 7, 8, 9, 10, 4, 5 })]
         [TestCase(new int[0], 1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, 0, new int[] { }, new int[] { 1, 2, 3, 4, 5 })]
@@ -407,6 +423,14 @@ namespace List.Tests
             actual.AddListAtIndex(list, index);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(null, new int[] { 1, 2 }, 1)]
+        public void AddListAtIndex_WhenNullPassed_ThrowArgumentNullException(IList array, int[] arrayList, int index)
+        {
+            ArrayList list = ArrayList.CreateArrayList(arrayList);
+
+            Assert.Throws<ArgumentNullException>(() => list.AddListAtIndex(array, index));
         }
 
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, 6, new int[] { 1, 2, 3, 4, 5 })]

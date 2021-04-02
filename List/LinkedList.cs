@@ -477,6 +477,11 @@ namespace List
 
         public void AddList(IList list)
         {
+            if(list is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             LinkedList linkedList = (LinkedList)list;
 
             if ((!(linkedList._root is null)) && (!(_root is null)))
@@ -489,7 +494,7 @@ namespace List
             }
             else if (this._root is null)
             {
-                if (linkedList is null)
+                if (linkedList._root is null)
                 {
                     return;
                 }
@@ -508,19 +513,14 @@ namespace List
 
         public void AddListToStart(IList list)
         {
+            if (list is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             LinkedList linkedList = (LinkedList)list;
 
-            if (linkedList._root is null)
-            {
-                return;
-            }
-            else if (this is null)
-            {
-                Length = Length + linkedList.Length;
-
-                this._root = linkedList._root;
-            }
-            else
+            if ((!(linkedList._root is null)) && (!(_root is null)))
             {
                 Length = Length + linkedList.Length;
 
@@ -530,17 +530,36 @@ namespace List
                 oldTail.Next = oldRoot;
                 _root = linkedList._root;
             }
+            else if (this._root is null)
+            {
+                if (linkedList._root is null)
+                {
+                    return;
+                }
+                else
+                {
+                    Length = Length + linkedList.Length;
+                    this._root = linkedList._root;
+                }
+            }
+            else
+            {
+                return;
+            }
         }
 
         public void AddListAtIndex(IList list, int index)
         {
-            LinkedList linkedList = (LinkedList)list;
-
+            if (list is null)
+            {
+                throw new ArgumentNullException();
+            }
             if (index < 0 || index > Length)
             {
                 throw new IndexOutOfRangeException();
             }
 
+            LinkedList linkedList = (LinkedList)list;
 
             if (this._root is null || linkedList._root is null)
             {
@@ -641,20 +660,13 @@ namespace List
             return result;
         }
 
-        public Node GetNodeCheck(int index)
+        private Node GetNodeByIndex(int index)
         {
-            if (index < 0 || index >= Length)
+            if (index < 0 || index > Length)
             {
                 throw new IndexOutOfRangeException();
             }
-            else
-            {
-                return GetNodeByIndex(index);
-            }
-        }
 
-        private Node GetNodeByIndex(int index)
-        {
             Node tmp = _root;
             int count = 0;
 

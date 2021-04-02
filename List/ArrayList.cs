@@ -390,6 +390,11 @@ namespace List
 
         public void AddList(IList list)
         {
+            if (list is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             ArrayList arrayList = (ArrayList)list;
 
             AddListAtIndex(arrayList, Length);
@@ -397,6 +402,11 @@ namespace List
 
         public void AddListToStart(IList list)
         {
+            if (list is null)
+            {
+                throw new ArgumentNullException();
+            }
+
             ArrayList arrayList = (ArrayList)list;
 
             AddListAtIndex(arrayList, 0);
@@ -404,35 +414,42 @@ namespace List
 
         public void AddListAtIndex(IList list, int index)
         {
-            ArrayList arrayList = (ArrayList)list;
-
+            if (list is null)
+            {
+                throw new ArgumentNullException();
+            }
             if (index < 0 || index > Length)
             {
                 throw new IndexOutOfRangeException();
             }
-            else if (arrayList.Length == 0)
+
+            ArrayList arrayList = (ArrayList)list;
+            
+            if (arrayList.Length == 0)
             {
                 return;
             }
-
-            Length = Length + arrayList.Length;
-
-            CheckAndChangeSize();
-
-            int count = 0;
-
-            for (int i = index; i < Length; i++)
+            else
             {
-                if (i + arrayList.Length < _array.Length)
-                {
-                    _array[i + arrayList.Length] = _array[i];
-                }
-                if (count < arrayList.Length)
-                {
-                    _array[i] = arrayList[count];
-                }
+                Length = Length + arrayList.Length;
 
-                ++count;
+                CheckAndChangeSize();
+
+                int count = 0;
+
+                for (int i = index; i < Length; i++)
+                {
+                    if (i + arrayList.Length < _array.Length)
+                    {
+                        _array[i + arrayList.Length] = _array[i];
+                    }
+                    if (count < arrayList.Length)
+                    {
+                        _array[i] = arrayList[count];
+                    }
+
+                    ++count;
+                }
             }
         }
 

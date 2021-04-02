@@ -367,9 +367,11 @@ namespace List.Tests
         [TestCase(new int[] { 6, 7, 8, 9, 10 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
         [TestCase(new int[0], new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[0], new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[0], new int[0], new int[0])]
+        [TestCase(new int[] { 6, 7, 8, 9, 10 }, new int[0], new int[] { 6, 7, 8, 9, 10 })]
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 })]
-        public void AddLinkedList_WhenLinkedListPassed_AddPassedLinkedListToLinkedListTheMethodIsCalledOn(int[] listToAdd, int[] linkedList, int[] expectedLinkedList)
+        public void AddList_WhenLinkedListPassed_AddPassedLinkedListToLinkedListTheMethodIsCalledOn(int[] listToAdd, int[] linkedList, int[] expectedLinkedList)
         {
             LinkedList actual = LinkedList.CreateLinkedList(linkedList);
             LinkedList expected = LinkedList.CreateLinkedList(expectedLinkedList);
@@ -380,9 +382,18 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(null, new int[] { 1, 2 })]
+        public void AddList_WhenNullPassed_ThrowArgumentNullException(IList array, int[] linkedList)
+        {
+            LinkedList list = LinkedList.CreateLinkedList(linkedList);
+
+            Assert.Throws<ArgumentNullException>(() => list.AddList(array));
+        }
+
         [TestCase(new int[] { 6, 7, 8, 9, 10 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 6, 7, 8, 9, 10, 1, 2, 3, 4, 5 })]
         [TestCase(new int[0], new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[0], new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[0], new int[0], new int[0])]
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { -1, -2, -3, -4, -5, 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5 })]
@@ -397,10 +408,19 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(null, new int[] { 1, 2 })]
+        public void AddListToStart_WhenNullPassed_ThrowArgumentNullException(IList array, int[] linkedList)
+        {
+            LinkedList list = LinkedList.CreateLinkedList(linkedList);
+
+            Assert.Throws<ArgumentNullException>(() => list.AddListToStart(array));
+        }
+
         [TestCase(new int[] { 6, 7, 8, 9, 10 }, 3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 6, 7, 8, 9, 10, 4, 5 })]
         [TestCase(new int[] { 6, 7, 8, 9, 10 }, 5, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
         [TestCase(new int[0], 1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, 0, new int[] { }, new int[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new int[] { 1, 2, 3, 4, 5 }, 0, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5, 1, 2, 3, 4, 5 })]
         [TestCase(new int[] { -1, -2, -3, -4, -5 }, 1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, -1, -2, -3, -4, -5, 2, 3, 4, 5 })]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 4, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5 })]
         public void AddListAtIndex_WhenLinkedListAndIndexPassed_AddPassedLinkedListToLinkedListOnTheGivenIndex(int[] listToAdd, int index, int[] linkedList, int[] expectedLinkedList)
@@ -424,8 +444,16 @@ namespace List.Tests
             Assert.Throws<IndexOutOfRangeException>(() => { list.AddListAtIndex(listToAdd, index); });
         }
 
+        [TestCase(null, new int[] { 1, 2 }, 1)]
+        public void AddListAtIndex_WhenNullPassed_ThrowArgumentNullException(IList array, int[] linkedList, int index)
+        {
+            LinkedList list = LinkedList.CreateLinkedList(linkedList);
+
+            Assert.Throws<ArgumentNullException>(() => list.AddListAtIndex(array, index));
+        }
+
         [TestCase(0)]
-        public void LinkedListListEmptyConstructor_WhenObjectOfAClassIsCreated_LengthEqualsZero(int expected)
+        public void LinkedListEmptyConstructor_WhenObjectOfAClassIsCreated_LengthEqualsZero(int expected)
         {
             LinkedList actualList = new LinkedList();
             int actual = actualList.Length;
@@ -443,7 +471,7 @@ namespace List.Tests
         }
 
         [TestCase(null)]
-        public void LinkedListArrayListConstructorWithArray_WhenNullPassed_ThrowArgumentNullException(int[] array)
+        public void LinkedListConstructorWithArray_WhenNullPassed_ThrowArgumentNullException(int[] array)
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
@@ -520,28 +548,6 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(-1, new int[] { 1, 2, 3, 4, 5 })]
-        [TestCase(5, new int[] { 1, 2, 3, 4, 5 })]
-        public void GetNodeByIndex_WhenIndexIsLessThanZeroOrBiggerOrEqualsLength_ThrowIndexOutOfRangeException(int index, int[] array)
-        {
-            Assert.Throws<IndexOutOfRangeException>(() =>
-            {
-                LinkedList linkedList = LinkedList.CreateLinkedList(array);
 
-                linkedList.GetNodeCheck(index);
-            });
-        }
-
-        [TestCase(0, new int[] { 1, 2, 3, 4, 5 }, 1)]
-        [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, 2)]
-        [TestCase(4, new int[] { 1, 2, 3, 4, 5 }, 5)]
-        public void GetNodeByIndex_WhenIndexIsCorrect_ReturnValueFromTheCorrectNode(int index, int[] array, int expected)
-        {
-            LinkedList linkedList = LinkedList.CreateLinkedList(array);
-
-            int actual = linkedList.GetNodeCheck(index).Value;
-
-            Assert.AreEqual(expected, actual);
-        }
     }
 }
