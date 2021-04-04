@@ -72,11 +72,11 @@ namespace List.Tests
         }
 
         [TestCase(new int[0])]
-        public void Remove_WhenUsedOnZeroLengthArray_ThrowException(int[] arrayList)
+        public void Remove_WhenUsedOnZeroLengthArray_ThrowInvalidOperationException(int[] arrayList)
         {
             ArrayList list = ArrayList.CreateArrayList(arrayList);
 
-            Assert.Throws<Exception>(() => { list.Remove(); });
+            Assert.Throws<InvalidOperationException>(() => { list.Remove(); });
         }
 
         [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 2, 3, 4, 5 })]
@@ -94,11 +94,11 @@ namespace List.Tests
         }
 
         [TestCase(new int[0])]
-        public void RemoveFirst_WhenUsedOnZeroLengthArray_ThrowException(int[] arrayList)
+        public void RemoveFirst_WhenUsedOnZeroLengthArray_ThrowInvalidOperationException(int[] arrayList)
         {
             ArrayList list = ArrayList.CreateArrayList(arrayList);
 
-            Assert.Throws<Exception>(() => { list.RemoveFirst(); });
+            Assert.Throws<InvalidOperationException>(() => { list.RemoveFirst(); });
         }
 
         [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 3, 4, 5 })]
@@ -115,10 +115,17 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(0, new int[0])]
+        public void RemoveAtIndex_WhenUsedOnZeroLengthArray_ThrowInvalidOperationException(int index, int[] arrayList)
+        {
+            ArrayList list = ArrayList.CreateArrayList(arrayList);
+
+            Assert.Throws<InvalidOperationException>(() => { list.RemoveAtIndex(index); });
+        }
+
         [TestCase(6, new int[] { 1, 2, 3, 4, 5 })]
         [TestCase(-1, new int[] { 1, 2, 3, 4, 5 })]
-        [TestCase(0, new int[] { })]
-        [TestCase(1, new int[] { })]
+        [TestCase(5, new int[] { 1, 2, 3, 4, 5 })]
         public void RemoveAtIndex_WhenIndexIsLessThanZeroOrBiggerThanArrayLength_ThrowIndexOutOfRangeException(int index, int[] arrayList)
         {
             ArrayList list = ArrayList.CreateArrayList(arrayList);
@@ -131,10 +138,8 @@ namespace List.Tests
         [TestCase(3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2 })]
         [TestCase(0, new int[] { 1 }, new int[] { 1 })]
         [TestCase(1, new int[] { 1 }, new int[] { })]
-        [TestCase(0, new int[] { }, new int[] { })]
         [TestCase(6, new int[] { 1, 2, 3, 4, 5 }, new int[] { })]
         [TestCase(5, new int[] { 1, 2, 3, 4, 5 }, new int[] { })]
-        [TestCase(1, new int[] { }, new int[] { })]
         public void RemoveNElements_WhenNumberOfElementsPassed_RemoveNElemetsFromTheEndOfTheList(int numberOfElements, int[] arrayList, int[] expectedArrayList)
         {
             ArrayList actual = ArrayList.CreateArrayList(arrayList);
@@ -143,6 +148,14 @@ namespace List.Tests
             actual.RemoveNElements(numberOfElements);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, new int[] { })]
+        public void RemoveNElements_WhenUsedOnZeroLengthArray_ThrowInvalidOperationException(int numberOfElements, int[] arrayList)
+        {
+            ArrayList list = ArrayList.CreateArrayList(arrayList);
+
+            Assert.Throws<InvalidOperationException>(() => { list.RemoveNElements(numberOfElements); });
         }
 
         [TestCase(1, new int[] { 1, 2, 3, 4, 5 }, new int[] { 2, 3, 4, 5 })]
@@ -167,7 +180,7 @@ namespace List.Tests
         [TestCase(3, 3, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3 })]
         [TestCase(5, 4, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 3, 4 })]
         [TestCase(7, 0, new int[] { 1, 2, 3, 4, 5 }, new int[] { })]
-        public void RemoveNElementsAtIndex_WhenNumberOfElementsPassed_RemoveNElemetsFromTheStartOfTheList(int numberOfElements, int index, int[] arrayList, int[] expectedArrayList)
+        public void RemoveNElementsAtIndex_WhenNumberOfElementsPassed_RemoveNElemetsAtIndex(int numberOfElements, int index, int[] arrayList, int[] expectedArrayList)
         {
             ArrayList actual = ArrayList.CreateArrayList(arrayList);
             ArrayList expected = ArrayList.CreateArrayList(expectedArrayList);
@@ -175,6 +188,14 @@ namespace List.Tests
             actual.RemoveNElementsAtIndex(numberOfElements, index);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(3, 6, new int[0])]
+        public void RemoveNElementsAtIndex_WhenUsedOnZeroLengthArray_ThrowInvalidOperationException(int numberOfElements, int index, int[] arrayList)
+        {
+            ArrayList list = ArrayList.CreateArrayList(arrayList);
+
+            Assert.Throws<InvalidOperationException>(() => { list.RemoveNElementsAtIndex(numberOfElements, index); });
         }
 
         [TestCase(3, 6, new int[] { 1, 2, 3, 4, 5 })]
@@ -230,14 +251,6 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase(new int[0])]
-        public void MaxValue_WhenUsedOnZeroLengthArray_ThrowException(int[] arrayList)
-        {
-            ArrayList list = ArrayList.CreateArrayList(arrayList);
-
-            Assert.Throws<Exception>(() => { list.MaxValue(); });
-        }
-
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, 3)]
         [TestCase(new int[] { -3, -9, -100, 100, 10 }, -100)]
         [TestCase(new int[] { 1 }, 1)]
@@ -249,14 +262,6 @@ namespace List.Tests
             int actual = list.MinValue();
 
             Assert.AreEqual(expected, actual);
-        }
-
-        [TestCase(new int[0])]
-        public void MinValue_WhenUsedOnZeroLengthArray_ThrowException(int[] arrayList)
-        {
-            ArrayList list = ArrayList.CreateArrayList(arrayList);
-
-            Assert.Throws<Exception>(() => { list.MinValue(); });
         }
 
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, 6)]
@@ -274,11 +279,11 @@ namespace List.Tests
         }
 
         [TestCase(new int[0])]
-        public void MaxValueIndex_WhenUsedOnZeroLengthArray_ThrowException(int[] arrayList)
+        public void MaxValueIndex_WhenUsedOnZeroLengthArray_ThrowInvalidOperationException(int[] arrayList)
         {
             ArrayList list = ArrayList.CreateArrayList(arrayList);
 
-            Assert.Throws<Exception>(() => { list.MaxValueIndex(); });
+            Assert.Throws<InvalidOperationException>(() => { list.MaxValueIndex(); });
         }
 
         [TestCase(new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, 0)]
@@ -295,26 +300,26 @@ namespace List.Tests
         }
 
         [TestCase(new int[0])]
-        public void MinValueIndex_WhenUsedOnZeroLengthArray_ThrowException(int[] arrayList)
+        public void MinValueIndex_WhenUsedOnZeroLengthArray_ThrowInvalidOperationException(int[] arrayList)
         {
             ArrayList list = ArrayList.CreateArrayList(arrayList);
 
-            Assert.Throws<Exception>(() => { list.MinValueIndex(); });
+            Assert.Throws<InvalidOperationException>(() => { list.MinValueIndex(); });
         }
 
-        [TestCase("a", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 3, 3, 4, 6, 7, 7, 8, 9 })]
-        [TestCase("A", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 3, 3, 4, 6, 7, 7, 8, 9 })]
-        [TestCase("a", new int[] { -3, -9, -100, 100, 10 }, new int[] { -100, -9, -3, 10, 100 })]
-        [TestCase("a", new int[] { 1 }, new int[] { 1 })]
-        [TestCase("a", new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
-        [TestCase("a", new int[0], new int[0])]
-        [TestCase("d", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 9, 8, 7, 7, 6, 4, 3, 3 })]
-        [TestCase("D", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 9, 8, 7, 7, 6, 4, 3, 3 })]
-        [TestCase("d", new int[] { -3, -9, -100, 100, 10 }, new int[] { 100, 10, -3, -9, -100 })]
-        [TestCase("d", new int[] { 1 }, new int[] { 1 })]
-        [TestCase("d", new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
-        [TestCase("d", new int[0], new int[0])]
-        public void Sort_WhenCorrectFlagIsPassed_SortsArrayByDescendingOrAscendingOrder(string flag, int[] actualArray, int[] expectedArray)
+        [TestCase(true, new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 3, 3, 4, 6, 7, 7, 8, 9 })]
+        [TestCase(true, new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 3, 3, 4, 6, 7, 7, 8, 9 })]
+        [TestCase(true, new int[] { -3, -9, -100, 100, 10 }, new int[] { -100, -9, -3, 10, 100 })]
+        [TestCase(true, new int[] { 1 }, new int[] { 1 })]
+        [TestCase(true, new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
+        [TestCase(true, new int[0], new int[0])]
+        [TestCase(false, new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 9, 8, 7, 7, 6, 4, 3, 3 })]
+        [TestCase(false, new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 9, 8, 7, 7, 6, 4, 3, 3 })]
+        [TestCase(false, new int[] { -3, -9, -100, 100, 10 }, new int[] { 100, 10, -3, -9, -100 })]
+        [TestCase(false, new int[] { 1 }, new int[] { 1 })]
+        [TestCase(false, new int[] { 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1, 1, 1 })]
+        [TestCase(false, new int[0], new int[0])]
+        public void Sort_WhenCorrectFlagIsPassed_SortsArrayByDescendingOrAscendingOrder(bool flag, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = ArrayList.CreateArrayList(actualArray);
             ArrayList expected = ArrayList.CreateArrayList(expectedArray);
@@ -322,16 +327,6 @@ namespace List.Tests
             actual.Sort(flag);
 
             Assert.AreEqual(expected, actual);
-        }
-
-        [TestCase("q", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 })]
-        [TestCase("ad", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 })]
-        [TestCase("da", new int[] { 3, 7, 4, 6, 7, 8, 9, 3 })]
-        public void Sort_WhenIncorrectFlagIsPassed_ThrowArgumentException(string flag, int[] arrayList)
-        {
-            ArrayList list = ArrayList.CreateArrayList(arrayList);
-
-            Assert.Throws<ArgumentException>(() => { list.Sort(flag); });
         }
 
         [TestCase(3, new int[] { 3, 7, 4, 6, 7, 8, 9, 3 }, new int[] { 7, 4, 6, 7, 8, 9, 3 })]

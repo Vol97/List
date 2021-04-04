@@ -38,7 +38,7 @@ namespace List
 
         public int MinValueIndex();
 
-        public void Sort(string sortOrderFlag);
+        public void Sort(bool ascending);
 
         public void RemoveFirstByValue(int value);
 

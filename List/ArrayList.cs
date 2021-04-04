@@ -6,6 +6,7 @@ namespace List
     public class ArrayList : IList
     {
         private int[] _array;
+        private const int _basicArrayLength = 10;
 
         public int Length { get; private set; }
 
@@ -35,14 +36,14 @@ namespace List
         {
             Length = 0;
 
-            _array = new int[10];
+            _array = new int[_basicArrayLength];
         }
 
         public ArrayList(int value)
         {
             Length = 1;
 
-            _array = new int[10];
+            _array = new int[_basicArrayLength];
 
             _array[0] = value;
         }
@@ -58,15 +59,13 @@ namespace List
 
         public static ArrayList CreateArrayList(int[] array)
         {
-            if(array is null)
+            if (array is null)
             {
                 throw new ArgumentNullException();
             }
             else
             {
-                ArrayList arrayList = new ArrayList(array);
-
-                return arrayList;
+                return new ArrayList(array);
             }
         }
 
@@ -103,7 +102,7 @@ namespace List
         {
             if (Length == 0)
             {
-                throw new Exception("The list is empty");
+                throw new InvalidOperationException("The list is empty");
             }
             else
             {
@@ -117,7 +116,7 @@ namespace List
         {
             if (Length == 0)
             {
-                throw new Exception("The list is empty");
+                throw new InvalidOperationException("The list is empty");
             }
             else
             {
@@ -127,6 +126,10 @@ namespace List
 
         public void RemoveAtIndex(int index)
         {
+            if (Length == 0)
+            {
+                throw new InvalidOperationException("The list is empty"); 
+            }
             if (index >= Length || index < 0)
             {
                 throw new IndexOutOfRangeException();
@@ -144,6 +147,11 @@ namespace List
 
         public void RemoveNElements(int numberOfElements)
         {
+            if (Length == 0)
+            {
+                throw new InvalidOperationException("The list is empty");
+            }
+
             if (Length >= numberOfElements)
             {
                 Length = Length - numberOfElements;
@@ -163,6 +171,10 @@ namespace List
 
         public void RemoveNElementsAtIndex(int numberOfElements, int index)
         {
+            if (Length == 0)
+            {
+                throw new InvalidOperationException("The list is empty");
+            }
             if (index >= Length || index < 0)
             {
                 throw new IndexOutOfRangeException();
@@ -239,33 +251,19 @@ namespace List
 
         public int MaxValue()
         {
-            if (Length == 0)
-            {
-                throw new Exception("Array length is 0");
-            }
-            else
-            {
-                return _array[MaxValueIndex()];
-            }
+            return _array[MaxValueIndex()];
         }
 
         public int MinValue()
         {
-            if (Length == 0)
-            {
-                throw new Exception("Array length is 0");
-            }
-            else
-            {
-                return _array[MinValueIndex()];
-            }
+            return _array[MinValueIndex()];
         }
 
         public int MaxValueIndex()
         {
             if (Length == 0)
             {
-                throw new Exception("The list is empty");
+                throw new InvalidOperationException("The list is empty");
             }
             else
             {
@@ -287,7 +285,7 @@ namespace List
         {
             if (Length == 0)
             {
-                throw new Exception("The list is empty");
+                throw new InvalidOperationException("The list is empty");
             }
             else
             {
@@ -305,51 +303,29 @@ namespace List
             }
         }
         /// <summary>
-        /// Descending/Ascending sort
+        /// Ascending/Descending sort
         /// </summary>
-        /// <param name="sortOrderFlag">Should be 'a' or 'd', for ascending or descending sort order respectively</param>
-        public void Sort(string sortOrderFlag)
+        /// <param name="ascending">Should be true or false bool, for ascending or descending sort order respectively</param>
+        public void Sort(bool ascending)
         {
-            switch (sortOrderFlag.ToLower())
+            int coef = ascending ? -1 : 1;
+
+            for (int i = 0; i < Length; i++)
             {
-                case "a":
-                    for (int i = 0; i < Length; i++)
+                int minIndex = i;
+                int minValue = _array[i];
+
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if (_array[j].CompareTo(minValue) == coef)
                     {
-                        int min = i;
-
-                        for (int j = i + 1; j < Length; j++)
-                        {
-                            if (_array[min] > _array[j])
-                            {
-                                min = j;
-                            }
-                        }
-
-                        int temp = _array[i];
-                        _array[i] = _array[min];
-                        _array[min] = temp;
+                        minIndex = j;
+                        minValue = _array[j];
                     }
-                    break;
-                case "d":
-                    for (int i = 0; i < Length; i++)
-                    {
-                        int max = i;
+                }
 
-                        for (int j = i + 1; j < Length; j++)
-                        {
-                            if (_array[max] < _array[j])
-                            {
-                                max = j;
-                            }
-                        }
-
-                        int temp = _array[i];
-                        _array[i] = _array[max];
-                        _array[max] = temp;
-                    }
-                    break;
-                default:
-                    throw new ArgumentException("Wrong argument. Should be 'a' for ascending or 'd' for descending sort");
+                _array[minIndex] = _array[i];
+                _array[i] = minValue;
             }
         }
 
@@ -424,7 +400,7 @@ namespace List
             }
 
             ArrayList arrayList = (ArrayList)list;
-            
+
             if (arrayList.Length == 0)
             {
                 return;

@@ -150,7 +150,7 @@ namespace List
         {
             if (Length == 0)
             {
-                throw new Exception("The list is empty");
+                throw new InvalidOperationException("The list is empty");
             }
 
             if (Length == 1)
@@ -175,7 +175,7 @@ namespace List
         {
             if (Length == 0)
             {
-                throw new Exception("The list is empty");
+                throw new InvalidOperationException("The list is empty");
             }
 
             if (Length == 1)
@@ -192,6 +192,10 @@ namespace List
 
         public void RemoveAtIndex(int index)
         {
+            if (Length == 0)
+            {
+                throw new InvalidOperationException("The list is empty");
+            }
             if (index < 0 || index >= Length)
             {
                 throw new IndexOutOfRangeException();
@@ -217,6 +221,11 @@ namespace List
 
         public void RemoveNElements(int numberOfElements)
         {
+            if (Length == 0)
+            {
+                throw new InvalidOperationException("The list is empty");
+            }
+
             if (Length > numberOfElements)
             {
                 Length = Length - numberOfElements;
@@ -233,6 +242,11 @@ namespace List
 
         public void RemoveFirstNElements(int numberOfElements)
         {
+            if (Length == 0)
+            {
+                throw new InvalidOperationException("The list is empty");
+            }
+
             if (Length > numberOfElements)
             {
                 Node tmp = GetNodeByIndex(numberOfElements);
@@ -250,6 +264,10 @@ namespace List
 
         public void RemoveNElementsAtIndex(int numberOfElements, int index)
         {
+            if (Length == 0)
+            {
+                throw new InvalidOperationException("The list is empty");
+            }
             if (index < 0 || index >= Length)
             {
                 throw new IndexOutOfRangeException();
@@ -316,37 +334,19 @@ namespace List
 
         public int MaxValue()
         {
-            if (Length == 0)
-            {
-                throw new Exception("Array length is 0");
-            }
-            else
-            {
-                Node res = GetNodeByIndex(MaxValueIndex());
-
-                return res.Value;
-            }
+            return GetNodeByIndex(MaxValueIndex()).Value;
         }
 
         public int MinValue()
         {
-            if (Length == 0)
-            {
-                throw new Exception("Array length is 0");
-            }
-            else
-            {
-                Node res = GetNodeByIndex(MinValueIndex());
-
-                return res.Value;
-            }
+            return GetNodeByIndex(MinValueIndex()).Value;
         }
 
         public int MaxValueIndex()
         {
             if (Length == 0)
             {
-                throw new Exception("The list is empty");
+                throw new InvalidOperationException("The list is empty");
             }
             else
             {
@@ -371,7 +371,7 @@ namespace List
         {
             if (Length == 0)
             {
-                throw new Exception("The list is empty");
+                throw new InvalidOperationException("The list is empty");
             }
             else
             {
@@ -392,51 +392,29 @@ namespace List
             }
         }
         /// <summary>
-        /// Descending/Ascending sort
+        /// Ascending/Descending sort
         /// </summary>
-        /// <param name="sortOrderFlag">Should be 'a' or 'd', for ascending or descending sort order respectively</param>
-        public void Sort(string sortOrderFlag)
+        /// <param name="ascending">Should be true or false bool, for ascending or descending sort order respectively</param>
+        public void Sort(bool ascending)
         {
-            switch (sortOrderFlag.ToLower())
+            int coef = ascending ? -1 : 1;
+
+            for (int i = 0; i < Length; i++)
             {
-                case "a":
-                    for (int i = 0; i < Length; i++)
+                int minIndex = i;
+                int minValue = GetNodeByIndex(i).Value;
+
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if (GetNodeByIndex(j).Value.CompareTo(minValue) == coef)
                     {
-                        int min = i;
-
-                        for (int j = i + 1; j < Length; j++)
-                        {
-                            if (GetNodeByIndex(min).Value > GetNodeByIndex(j).Value)
-                            {
-                                min = j;
-                            }
-                        }
-
-                        int temp = GetNodeByIndex(i).Value;
-                        GetNodeByIndex(i).Value = GetNodeByIndex(min).Value;
-                        GetNodeByIndex(min).Value = temp;
+                        minIndex = j;
+                        minValue = GetNodeByIndex(j).Value;
                     }
-                    break;
-                case "d":
-                    for (int i = 0; i < Length; i++)
-                    {
-                        int max = i;
+                }
 
-                        for (int j = i + 1; j < Length; j++)
-                        {
-                            if (GetNodeByIndex(max).Value < GetNodeByIndex(j).Value)
-                            {
-                                max = j;
-                            }
-                        }
-
-                        int temp = GetNodeByIndex(i).Value;
-                        GetNodeByIndex(i).Value = GetNodeByIndex(max).Value;
-                        GetNodeByIndex(max).Value = temp;
-                    }
-                    break;
-                default:
-                    throw new ArgumentException("Wrong argument. Should be 'a' for ascending or 'd' for descending sort");
+                GetNodeByIndex(minIndex).Value = GetNodeByIndex(i).Value;
+                GetNodeByIndex(i).Value = minValue;
             }
         }
 
@@ -477,7 +455,7 @@ namespace List
 
         public void AddList(IList list)
         {
-            if(list is null)
+            if (list is null)
             {
                 throw new ArgumentNullException();
             }
