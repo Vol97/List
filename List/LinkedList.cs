@@ -575,21 +575,15 @@ namespace List
         {
             StringBuilder result = new StringBuilder();
 
-            if (Length != 0)
-            {
-                Node current = _root;
-                result.Append(current.Value + " ");
+            Node current = _root;
 
-                while (!(current.Next is null))
-                {
-                    current = current.Next;
-                    result.Append(current.Value + " ");
-                }
+            for (int i = 0; i < Length; i++)
+            {
+                result.Append(current.Value + " ");
+                current = current.Next;
             }
 
-
             return result.ToString().TrimEnd();
-
         }
 
         public override bool Equals(object obj)

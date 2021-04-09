@@ -128,7 +128,7 @@ namespace List
         {
             if (Length == 0)
             {
-                throw new InvalidOperationException("The list is empty"); 
+                throw new InvalidOperationException("The list is empty");
             }
             if (index >= Length || index < 0)
             {
@@ -236,17 +236,19 @@ namespace List
 
         public void Reverse()
         {
-            int[] tmpArray = new int[_array.Length];
+            int tmp = 0;
+            int lastIndex = Length - 1;
             int count = 0;
 
-            for (int i = Length - 1; i >= 0; i--)
+            while (count != Length / 2)
             {
-                tmpArray[count] = _array[i];
+                tmp = _array[count];
+                _array[count] = _array[lastIndex];
+                _array[lastIndex] = tmp;
 
                 ++count;
+                --lastIndex;
             }
-
-            _array = tmpArray;
         }
 
         public int MaxValue()
